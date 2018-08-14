@@ -2,6 +2,7 @@ package abhishekdewan101.com.doordashlite.data.local;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface ResturantDao {
 
     @Insert
     void insertResturant(Resturant resturant);
+
+    @Query("DELETE FROM resturants")
+    void resetForNewLocation();
+
 }
