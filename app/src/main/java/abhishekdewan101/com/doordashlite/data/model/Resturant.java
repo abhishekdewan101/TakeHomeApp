@@ -1,9 +1,14 @@
 package abhishekdewan101.com.doordashlite.data.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "resturants")
 public class Resturant {
 
+    @PrimaryKey
     @SerializedName("id")
     public int mId;
 

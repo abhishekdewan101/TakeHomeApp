@@ -1,11 +1,7 @@
-package abhishekdewan101.com.doordashlite.data.remote;
+package abhishekdewan101.com.doordashlite.data.remote.Api;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.util.List;
-
-import abhishekdewan101.com.doordashlite.data.model.Resturant;
-import io.reactivex.Flowable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -13,20 +9,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DDResturantApiManager {
 
-    private static DDResturantApiManager mInstance;
     private Retrofit mDDRetrofitClient;
+    private DDResturantApi mResturantApi;
 
-    private DDResturantApiManager() {
+    public DDResturantApiManager() {
         createDDRetrofitClient();
+        createDDResturantApis();
     }
-
-    public static DDResturantApiManager getInstance() {
-        if (mInstance == null) {
-            mInstance = new DDResturantApiManager();
-        }
-        return mInstance;
-    }
-
 
     private void createDDRetrofitClient() {
         mDDRetrofitClient = new Retrofit.Builder().baseUrl("https://api.doordash.com")
@@ -44,7 +33,11 @@ public class DDResturantApiManager {
         return client;
     }
 
-    public Flowable<List<Resturant>> getAllResturants(String lat, String lng) {
-        return mDDRetrofitClient.create(DDResturantApi.class).getResturantListForLocation(lat,lng);
+    private void createDDResturantApis() {
+        mResturantApi = mDDRetrofitClient.create(DDResturantApi.class);
+    }
+
+    public DDResturantApi getResturantApi() {
+        return mResturantApi;
     }
 }
