@@ -9,6 +9,7 @@ import abhishekdewan101.com.doordashlite.R;
 import abhishekdewan101.com.doordashlite.data.local.ResturantDatabase;
 import abhishekdewan101.com.doordashlite.data.managers.DDLocationManager;
 import abhishekdewan101.com.doordashlite.data.remote.RemoteDBManger;
+import abhishekdewan101.com.doordashlite.data.repository.LocationRepository;
 import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
 import abhishekdewan101.com.doordashlite.features.home.HomeScreenActivity;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
@@ -67,8 +68,8 @@ public class LauncherActivity extends BaseActivity {
                         }
                 );
 
-        DDLocationManager locationManager = new DDLocationManager();
-        locationManager.getUserCurrentLocation(this).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        LocationRepository locationRepository = new LocationRepository();
+        locationRepository.getUserCurrentLocation(this).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         .subscribe(location -> {
             DDLog.d(TAG,"Lat - " + location.getLatitude());
             DDLog.d(TAG,"Lng - " + location.getLongitude());
