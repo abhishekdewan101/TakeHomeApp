@@ -27,9 +27,10 @@ public class HomeScreenActivity extends BaseActivity {
                 .subscribe(
                         resturants -> {
                             Log.d(TAG,"Number of Resturants from DB is " + resturants.size());
+                            Log.d(TAG,"Number of menu items is " + resturants.get(10).mMenus.size());
                         },
                         error -> {
-                            Log.d(TAG,error.getLocalizedMessage());
+                            Log.e(TAG,error.getLocalizedMessage());
                         }
                 );
     }

@@ -1,9 +1,14 @@
 package abhishekdewan101.com.doordashlite.data.model;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @Entity(tableName = "resturants")
 public class Resturant {
@@ -24,14 +29,64 @@ public class Resturant {
     @SerializedName("delivery_fee")
     public long mDeliveryFee;
 
-    public Resturant(int id, String name, String description, String coverImageUrl, long deliveryFee) {
+    @SerializedName("is_time_surging")
+    public boolean mIsPriceSurging;
+
+    @Ignore
+    @SerializedName("menus")
+    public List<Menu> mMenus;
+
+    @SerializedName("number_of_ratings")
+    public long mResturantRating;
+
+    @SerializedName("tags")
+    public List<String> mTags;
+
+    @SerializedName("yelp_review_count")
+    public long mYelpReviewCount;
+
+    @SerializedName("is_newly_added")
+    public boolean mIsNewlyAdded;
+
+    @Embedded
+    @SerializedName("address")
+    public Address mAddress;
+
+
+    public Resturant(int id, String name, String description, String coverImageUrl,
+                     long deliveryFee, boolean isPriceSurging, List<Menu> menus,
+                     long resturantRating, List<String> tags, long yelpReviewCount,
+                     boolean isNewlyAdded, Address address) {
         mId = id;
         mName = name;
         mDescription = description;
         mCoverImageUrl = coverImageUrl;
         mDeliveryFee = deliveryFee;
+        mIsPriceSurging = isPriceSurging;
+        mMenus = menus;
+        mResturantRating = resturantRating;
+        mTags = tags;
+        mYelpReviewCount = yelpReviewCount;
+        mIsNewlyAdded = isNewlyAdded;
+        mAddress = address;
     }
 
+    public Resturant(int id, String name, String description, String coverImageUrl,
+                     long deliveryFee, boolean isPriceSurging, long resturantRating,
+                     List<String> tags, long yelpReviewCount, boolean isNewlyAdded,
+                     Address address) {
+        mId = id;
+        mName = name;
+        mDescription = description;
+        mCoverImageUrl = coverImageUrl;
+        mDeliveryFee = deliveryFee;
+        mIsPriceSurging = isPriceSurging;
+        mResturantRating = resturantRating;
+        mTags = tags;
+        mYelpReviewCount = yelpReviewCount;
+        mIsNewlyAdded = isNewlyAdded;
+        mAddress = address;
+    }
 
     public int getId() {
         return mId;
@@ -71,5 +126,61 @@ public class Resturant {
 
     public void setDeliveryFee(long deliveryFee) {
         mDeliveryFee = deliveryFee;
+    }
+
+    public boolean isPriceSurging() {
+        return mIsPriceSurging;
+    }
+
+    public void setPriceSurging(boolean priceSurging) {
+        mIsPriceSurging = priceSurging;
+    }
+
+    public List<Menu> getMenus() {
+        return mMenus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        mMenus = menus;
+    }
+
+    public long getResturantRating() {
+        return mResturantRating;
+    }
+
+    public void setResturantRating(long resturantRating) {
+        mResturantRating = resturantRating;
+    }
+
+    public List<String> getTags() {
+        return mTags;
+    }
+
+    public void setTags(List<String> tags) {
+        mTags = tags;
+    }
+
+    public long getYelpReviewCount() {
+        return mYelpReviewCount;
+    }
+
+    public void setYelpReviewCount(long yelpReviewCount) {
+        mYelpReviewCount = yelpReviewCount;
+    }
+
+    public boolean isNewlyAdded() {
+        return mIsNewlyAdded;
+    }
+
+    public void setNewlyAdded(boolean newlyAdded) {
+        mIsNewlyAdded = newlyAdded;
+    }
+
+    public Address getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(Address address) {
+        mAddress = address;
     }
 }
