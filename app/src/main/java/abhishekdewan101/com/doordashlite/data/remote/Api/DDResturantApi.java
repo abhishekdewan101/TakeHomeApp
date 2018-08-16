@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 
 public interface DDResturantApi {
 
-    @GET("v2/restaurant")
+    @GET("v2/restaurant/")
     Flowable<List<Resturant>> getResturantListForLocation(@Query("lat") String lat,
                                                                  @Query("lng") String lng);
 

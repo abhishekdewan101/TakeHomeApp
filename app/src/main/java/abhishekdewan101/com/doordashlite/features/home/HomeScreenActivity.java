@@ -7,12 +7,18 @@ import android.util.Log;
 import abhishekdewan101.com.doordashlite.R;
 import abhishekdewan101.com.doordashlite.data.local.ResturantDatabase;
 import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
+import abhishekdewan101.com.doordashlite.features.base.BasePresenter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class HomeScreenActivity extends BaseActivity {
+public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter> implements HomeScreenContract.HomeScreenView {
 
     private ResturantDatabase mDatabase;
+
+    @Override
+    protected HomeScreenPresenter createPresenter() {
+        return new HomeScreenPresenter(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +39,20 @@ public class HomeScreenActivity extends BaseActivity {
                             Log.e(TAG,error.getLocalizedMessage());
                         }
                 );
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+
     }
 }

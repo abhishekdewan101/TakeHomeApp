@@ -18,9 +18,14 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends BaseActivity<LauncherPresenter> implements LauncherContract.LauncherView {
 
     public static final int REQUIRED_PERMISSION_REQUEST_CODE = 200;
+
+    @Override
+    protected LauncherPresenter createPresenter() {
+        return new LauncherPresenter(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,29 +39,10 @@ public class LauncherActivity extends BaseActivity {
         boolean appHasPermission = PermissionCheckUtil.checkForPermission(this, DDConstants.REQUIRED_PERMISSIONS);
         if (appHasPermission) {
             DDLog.d(TAG, "App Has Permission to Get Location.");
-            getUserLocation();
+            mPresenter.getResturantsForCurrentLocation(this);
         } else {
             requestRequiredPermission();
         }
-    }
-
-    private void getUserLocation() {
-        LocationRepository locationRepository = new LocationRepository();
-        ResturantRepository resturantRepository = new ResturantRepository();
-        locationRepository.getUserCurrentLocation(this)
-                .flatMap(location -> resturantRepository.getResturantListForLocation(String.valueOf(location.getLatitude()),
-                        String.valueOf(location.getLongitude()))
-                        .observeOn(Schedulers.io())
-                        .subscribeOn(Schedulers.io()))
-                .subscribe(resturants -> {
-                    DDLog.d(TAG, "Number of Resturants - " + resturants.size());
-                }, error -> {
-                    DDLog.e(TAG, error.getMessage());
-
-                }, () -> {
-                    startActivity(new Intent(this, HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    this.finish();
-                });
     }
 
     private void requestRequiredPermission() {
@@ -67,7 +53,7 @@ public class LauncherActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean appHasPermission = PermissionCheckUtil.doesAppHaveAllPermissions(permissions, grantResults);
         if (appHasPermission) {
-            getUserLocation();
+            mPresenter.getResturantsForCurrentLocation(this);
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle("Location Permission Required")
@@ -82,61 +68,24 @@ public class LauncherActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void showLoading() {
 
-    //    DDResturantDBManager mRemoteDBManger;
-//
-//    private ResturantDatabase mDatabase;
+    }
 
+    @Override
+    public void dismissLoading() {
 
-//    private void nukeTable() {
-//        mDatabase.resturantDao().resetForNewLocation();
-//    }
-//
-//    mDatabase = Room.databaseBuilder(this.getApplication(), ResturantDatabase.class,"resturants.db").build();
-////
-//    mRemoteDBManger = DDResturantDBManager.getInstance();
-//
-//        Flowable.create(e -> {
-//        nukeTable();
-//        e.onNext(1);
-//        e.onComplete();
-//    }, BackpressureStrategy.LATEST)
-//            .subscribeOn(Schedulers.io())
-//            .subscribe(
-//            result -> {
-//
-//    },
-//    error -> {
-//        Log.e(TAG,error.getLocalizedMessage());
-//    }
-//        );
-//
-//
-//        mRemoteDBManger.getResturantsForLocation("37.422740","-122.139956")
-//                .subscribeOn(Schedulers.io())
-//            .observeOn(Schedulers.io())
-//            .flatMap(resturants -> Flowable.fromIterable(resturants))
-//            .subscribe(
-//            resturant -> {
-////                            Log.d(TAG,"Resturant Name - " + resturant.mName);
-////                            Log.d(TAG,"Resturants Tags - " + resturant.mTags);
-//        mDatabase.resturantDao().insertResturant(resturant);
-//    },
-//    error -> {
-//        Log.e(TAG,error.getLocalizedMessage());
-//    },
-//            () -> {
-//        startActivity(new Intent(this,HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-//        this.finish();
-//    }
-//                );
-//
-//    LocationRepository locationRepository = new LocationRepository();
-//        locationRepository.getUserCurrentLocation(this).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(location -> {
-//        DDLog.d(TAG,"Lat - " + location.getLatitude());
-//        DDLog.d(TAG,"Lng - " + location.getLongitude());
-//    }, error -> {
-//        DDLog.e(TAG,error.getMessage());
-//    });
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+
+    }
+
+    @Override
+    public void onResturantsDownloaded() {
+        startActivity(new Intent(this, HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        this.finish();
+    }
 }
