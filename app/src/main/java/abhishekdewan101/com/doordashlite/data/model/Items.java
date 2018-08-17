@@ -2,13 +2,16 @@ package abhishekdewan101.com.doordashlite.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Relation;
 
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "items")
 public class Items {
 
+    @PrimaryKey
     @SerializedName("id")
     public int mId;
 
@@ -24,12 +27,22 @@ public class Items {
     @SerializedName("image_url")
     public String mImageUrl;
 
+    public int mResturantId;
+
     public Items(int id, String name, String description, int price, String imageUrl) {
         mId = id;
         mName = name;
         mDescription = description;
         mPrice = price;
         mImageUrl = imageUrl;
+    }
+
+    public int getResturantId() {
+        return mResturantId;
+    }
+
+    public void setResturantId(int resturantId) {
+        mResturantId = resturantId;
     }
 
     public int getId() {

@@ -1,9 +1,9 @@
-package abhishekdewan101.com.doordashlite.data.repository;
+package abhishekdewan101.com.doordashlite.core.repository;
 
 import java.util.List;
 
+import abhishekdewan101.com.doordashlite.core.managers.DDResturantManager;
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
-import abhishekdewan101.com.doordashlite.data.remote.Api.DDResturantApiManager;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;
@@ -12,19 +12,19 @@ public class ResturantRepository {
 
     private final String TAG = DDConstants.PREFIX + ResturantRepository.class.getSimpleName();
 
-    DDResturantApiManager mResturantApiManager;
+    DDResturantManager mResturantManager;
 
     public ResturantRepository() {
-        mResturantApiManager = new DDResturantApiManager();
+        mResturantManager = new DDResturantManager();
     }
 
     public Flowable<List<Resturant>> getResturantListForLocation(String lat, String lng) {
         DDLog.d(TAG,"getResturantListForLocation");
-        return mResturantApiManager.getResturantApi().getResturantListForLocation(lat,lng);
+        return mResturantManager.getResturantsForLocation(lat,lng);
     }
 
     public Flowable<Resturant> getResturantDetailsForID(long id) {
         DDLog.d(TAG,"getResturantDetailsForID");
-        return mResturantApiManager.getResturantApi().getResturantDetailsForID(id);
+        return mResturantManager.getResturantDetailsForResturant(id);
     }
 }

@@ -7,16 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
 import abhishekdewan101.com.doordashlite.R;
-import abhishekdewan101.com.doordashlite.data.repository.LocationRepository;
-import abhishekdewan101.com.doordashlite.data.repository.ResturantRepository;
 import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
 import abhishekdewan101.com.doordashlite.features.home.HomeScreenActivity;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import abhishekdewan101.com.doordashlite.utils.PermissionCheckUtil;
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class LauncherActivity extends BaseActivity<LauncherPresenter> implements LauncherContract.LauncherView {
 
@@ -32,6 +27,34 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         verifyRequiredPermissions();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+        if (throwable.getMessage().contains("Timed Out")) {
+            mPresenter.doesLocalDBHaveData(this);
+        }
+    }
+
+    @Override
+    public void onResturantsDownloaded() {
+        startActivity(new Intent(this, HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        this.finish();
+    }
+
+    @Override
+    public void showOfflineAccessMode() {
+        DDLog.d(TAG,"Showing Offline Mode");
     }
 
     private void verifyRequiredPermissions() {
@@ -66,26 +89,5 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
                     })).create();
             alertDialog.show();
         }
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void dismissLoading() {
-
-    }
-
-    @Override
-    public void handleError(Throwable throwable) {
-
-    }
-
-    @Override
-    public void onResturantsDownloaded() {
-        startActivity(new Intent(this, HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-        this.finish();
     }
 }

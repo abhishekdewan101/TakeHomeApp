@@ -1,4 +1,4 @@
-package abhishekdewan101.com.doordashlite.data.remote.Api;
+package abhishekdewan101.com.doordashlite.data.remote;
 
 import java.util.List;
 

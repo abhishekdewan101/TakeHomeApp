@@ -1,9 +1,9 @@
-package abhishekdewan101.com.doordashlite.data.repository;
+package abhishekdewan101.com.doordashlite.core.repository;
 
 import android.content.Context;
 import android.location.Location;
 
-import abhishekdewan101.com.doordashlite.data.managers.DDLocationManager;
+import abhishekdewan101.com.doordashlite.core.managers.DDLocationManager;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;

@@ -1,6 +1,6 @@
 package abhishekdewan101.com.doordashlite.features.base;
 
-import abhishekdewan101.com.doordashlite.data.repository.LocationRepository;
+import abhishekdewan101.com.doordashlite.core.repository.LocationRepository;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import io.reactivex.disposables.CompositeDisposable;
 

@@ -44,4 +44,7 @@ dependencies {
     implementation 'android.arch.persistence.room:rxjava2:1.1.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.jakewharton:butterknife-annotations:8.8.1'
+    //Lottie
+    implementation "com.airbnb.android:lottie:2.5.0"
+
 }

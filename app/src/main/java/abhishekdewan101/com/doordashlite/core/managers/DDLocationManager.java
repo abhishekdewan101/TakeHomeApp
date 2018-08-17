@@ -1,12 +1,10 @@
-package abhishekdewan101.com.doordashlite.data.managers;
+package abhishekdewan101.com.doordashlite.core.managers;
 
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Looper;
-
-import org.reactivestreams.Publisher;
 
 import java.util.concurrent.TimeUnit;
 

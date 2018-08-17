@@ -1,4 +1,4 @@
-package abhishekdewan101.com.doordashlite.data.remote.Api;
+package abhishekdewan101.com.doordashlite.data.remote;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -7,12 +7,12 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DDResturantApiManager {
+public class DDResturantApiClient {
 
     private Retrofit mDDRetrofitClient;
     private DDResturantApi mResturantApi;
 
-    public DDResturantApiManager() {
+    public DDResturantApiClient() {
         createDDRetrofitClient();
         createDDResturantApis();
     }
