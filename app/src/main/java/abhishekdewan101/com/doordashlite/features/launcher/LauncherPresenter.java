@@ -8,6 +8,7 @@ import abhishekdewan101.com.doordashlite.data.model.Resturant;
 import abhishekdewan101.com.doordashlite.features.base.BasePresenter;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> implements LauncherContract.LauncherActions{
@@ -46,7 +47,7 @@ class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> imp
         DDLog.d(TAG,"doesLocalDBHaveData");
         mLocalDBRepository.getAllResturantsFromDB(context)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         size -> {
                            DDLog.d(TAG,"Number of Resturants is " + size);

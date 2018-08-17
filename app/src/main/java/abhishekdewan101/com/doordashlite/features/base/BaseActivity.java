@@ -14,7 +14,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected String TAG = DDConstants.PREFIX + this.getClass().getSimpleName();
 
     protected P mPresenter;
-    private Unbinder mUnBinder;
+    public Unbinder mUnBinder;
 
     protected abstract P createPresenter();
 
@@ -34,29 +34,5 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mPresenter.detachView();
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        initButterKnife();
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        initButterKnife();
-    }
-
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-        super.setContentView(view, params);
-        initButterKnife();
-    }
-
-    private void initButterKnife() {
-        if(mUnBinder == null) {
-            mUnBinder = ButterKnife.bind(this);
-        }
     }
 }

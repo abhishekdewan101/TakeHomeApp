@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import abhishekdewan101.com.doordashlite.R;
 import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
@@ -12,10 +16,19 @@ import abhishekdewan101.com.doordashlite.features.home.HomeScreenActivity;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import abhishekdewan101.com.doordashlite.utils.PermissionCheckUtil;
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 
 public class LauncherActivity extends BaseActivity<LauncherPresenter> implements LauncherContract.LauncherView {
 
     public static final int REQUIRED_PERMISSION_REQUEST_CODE = 200;
+
+    @BindView(R.id.offlineModeLayout)
+    LinearLayout mOfflineModeLayout;
+
+    @BindView(R.id.loadingAnimation)
+    LottieAnimationView mLoadingAnimation;
 
     @Override
     protected LauncherPresenter createPresenter() {
@@ -26,6 +39,7 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+        mUnBinder = ButterKnife.bind(this);
         verifyRequiredPermissions();
     }
 
@@ -55,6 +69,8 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     @Override
     public void showOfflineAccessMode() {
         DDLog.d(TAG,"Showing Offline Mode");
+        mLoadingAnimation.setVisibility(View.GONE);
+        mOfflineModeLayout.setVisibility(View.VISIBLE);
     }
 
     private void verifyRequiredPermissions() {
