@@ -1,12 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/headingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HomeScreen"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Browse"
+        android:textColor="#000000"
+        android:textSize="36dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/headingText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Filter"
+        android:textColor="#FF0000"
+        android:textSize="18dp" />
+
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/headingText"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="5"
+        android:background="@drawable/search_bar_background">
+
+
+        <ImageView
+            android:id="@+id/searchButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/search" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/searchButton"
+            android:background="@null"
+            android:focusableInTouchMode="true"
+            android:hint="Search For Resturant"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="#535759"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mainResturantList"
+        android:layout_below="@id/searchLayout"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </RelativeLayout>

@@ -10,12 +10,13 @@ import java.util.List;
 import abhishekdewan101.com.doordashlite.data.model.Items;
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface ResturantDao {
 
     @Query("SELECT * FROM resturants")
-    Flowable<List<Resturant>> getAllCachedResturants();
+    Single<List<Resturant>> getAllCachedResturants();
 
     @Query("SELECT * FROM items WHERE mResturantId = :resturantId")
     Flowable<List<Items>> getAllItemsForResturant(long resturantId);

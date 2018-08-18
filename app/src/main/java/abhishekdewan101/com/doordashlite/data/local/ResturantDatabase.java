@@ -7,7 +7,7 @@ import android.arch.persistence.room.TypeConverters;
 import abhishekdewan101.com.doordashlite.data.model.Items;
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
 
-@Database(entities = {Resturant.class, Items.class},version = 2,exportSchema = false)
+@Database(entities = {Resturant.class, Items.class},version = 3,exportSchema = false)
 @TypeConverters({DBTypeConverters.class})
 public abstract class ResturantDatabase extends RoomDatabase{
 

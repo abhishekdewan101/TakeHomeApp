@@ -12,6 +12,7 @@ import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class LocalDBRepository {
 
@@ -19,10 +20,17 @@ public class LocalDBRepository {
 
     private static ResturantDatabase mResturantDatabase;
 
-    public Flowable<Integer> getAllResturantsFromDB(Context context) {
+    public Flowable<Integer> getNumberOfResturantsInDB(Context context) {
         DDLog.d(TAG,"getAllResturantFromDB");
         return getDBFlowable(context).flatMap(
           resturantDatabase -> resturantDatabase.resturantDao().provideNumberOfResturantsInDB()
+        );
+    }
+
+    public Single<List<Resturant>> getAllResturantsInDB(Context context) {
+        DDLog.d(TAG,"getAllResturantsInDB");
+        return getDBFlowable(context).firstOrError().flatMap(
+          resturantDatabase -> resturantDatabase.resturantDao().getAllCachedResturants()
         );
     }
 

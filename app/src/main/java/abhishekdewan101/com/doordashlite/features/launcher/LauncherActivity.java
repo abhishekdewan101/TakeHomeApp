@@ -7,8 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+
+import org.w3c.dom.Text;
 
 import abhishekdewan101.com.doordashlite.R;
 import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
@@ -19,6 +22,7 @@ import abhishekdewan101.com.doordashlite.utils.PermissionCheckUtil;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LauncherActivity extends BaseActivity<LauncherPresenter> implements LauncherContract.LauncherView {
 
@@ -29,6 +33,13 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
 
     @BindView(R.id.loadingAnimation)
     LottieAnimationView mLoadingAnimation;
+
+    @BindView(R.id.noButton)
+    TextView mNoButton;
+
+    @BindView(R.id.yesButton)
+    TextView mYesButton;
+    private long mStartTime;
 
     @Override
     protected LauncherPresenter createPresenter() {
@@ -41,6 +52,7 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
         setContentView(R.layout.activity_launcher);
         mUnBinder = ButterKnife.bind(this);
         verifyRequiredPermissions();
+        mStartTime = System.currentTimeMillis();
     }
 
     @Override
@@ -53,6 +65,16 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
 
     }
 
+    @OnClick(R.id.noButton)
+    public void noButtonClicked() {
+        this.finish();
+    }
+
+    @OnClick(R.id.yesButton)
+    public void yesButtonClicked() {
+        onResturantsDownloaded();
+    }
+
     @Override
     public void handleError(Throwable throwable) {
         if (throwable.getMessage().contains("Timed Out")) {
@@ -62,6 +84,7 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
 
     @Override
     public void onResturantsDownloaded() {
+        DDLog.e(TAG,"Total Load Time Taken - " + (System.currentTimeMillis() - mStartTime));
         startActivity(new Intent(this, HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         this.finish();
     }
@@ -78,10 +101,15 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
         boolean appHasPermission = PermissionCheckUtil.checkForPermission(this, DDConstants.REQUIRED_PERMISSIONS);
         if (appHasPermission) {
             DDLog.d(TAG, "App Has Permission to Get Location.");
-            mPresenter.getResturantsForCurrentLocation(this);
+            appHasRequiredPermissions();
         } else {
             requestRequiredPermission();
         }
+    }
+
+    private void appHasRequiredPermissions() {
+        mLoadingAnimation.setVisibility(View.VISIBLE);
+        mPresenter.getResturantsForCurrentLocation(this);
     }
 
     private void requestRequiredPermission() {
@@ -92,7 +120,7 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean appHasPermission = PermissionCheckUtil.doesAppHaveAllPermissions(permissions, grantResults);
         if (appHasPermission) {
-            mPresenter.getResturantsForCurrentLocation(this);
+            appHasRequiredPermissions();
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle("Location Permission Required")

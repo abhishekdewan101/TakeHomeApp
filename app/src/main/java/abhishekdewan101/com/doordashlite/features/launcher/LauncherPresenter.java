@@ -4,7 +4,7 @@ import android.content.Context;
 
 import abhishekdewan101.com.doordashlite.core.repository.LocalDBRepository;
 import abhishekdewan101.com.doordashlite.core.repository.ResturantRepository;
-import abhishekdewan101.com.doordashlite.data.model.Resturant;
+import abhishekdewan101.com.doordashlite.data.remote.DDResturantApiClient;
 import abhishekdewan101.com.doordashlite.features.base.BasePresenter;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;
@@ -28,16 +28,19 @@ class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> imp
         mLocationRepository.getUserCurrentLocation(context)
                 .flatMap(location -> mResturantRepository.getResturantListForLocation(
                         String.valueOf(location.getLatitude()),
-                        String.valueOf(location.getLongitude())
+                        String.valueOf(location.getLongitude()),
+                        DDResturantApiClient.mCurrentOffset
                         ).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()))
-                        .flatMap(resturants -> Flowable.fromIterable(resturants))
+                        .flatMap(resturants -> mLocalDBRepository.resetDBForNewLocation(context).flatMap(
+                                result -> Flowable.fromIterable(resturants)
+                        ))
                         .flatMap(resturant -> mLocalDBRepository.insertResturantIntoDB(context,resturant))
-                .subscribe(resturant -> {
-
+                .subscribe(result -> {
                 }, error -> {
                     DDLog.e(TAG, error.getMessage());
                     mBaseView.handleError(error);
                 }, () -> {
+                    DDResturantApiClient.mCurrentOffset++;
                     mBaseView.onResturantsDownloaded();
                 });
     }
@@ -45,7 +48,7 @@ class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> imp
     @Override
     public void doesLocalDBHaveData(Context context) {
         DDLog.d(TAG,"doesLocalDBHaveData");
-        mLocalDBRepository.getAllResturantsFromDB(context)
+        mLocalDBRepository.getNumberOfResturantsInDB(context)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

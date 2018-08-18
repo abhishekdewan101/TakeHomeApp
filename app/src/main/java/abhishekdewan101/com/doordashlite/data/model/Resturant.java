@@ -48,15 +48,19 @@ public class Resturant {
     @SerializedName("is_newly_added")
     public boolean mIsNewlyAdded;
 
+    @SerializedName("average_rating")
+    public float mAverageRating;
+
     @Embedded
     @SerializedName("address")
     public Address mAddress;
 
-
-    public Resturant(int id, String name, String description, String coverImageUrl,
-                     long deliveryFee, boolean isPriceSurging, List<Menu> menus,
-                     long resturantRating, List<String> tags, long yelpReviewCount,
-                     boolean isNewlyAdded, Address address) {
+    public Resturant(int id, String name, String description,
+                     String coverImageUrl, long deliveryFee,
+                     boolean isPriceSurging, List<Menu> menus,
+                     long resturantRating, List<String> tags,
+                     long yelpReviewCount, boolean isNewlyAdded,
+                     float averageRating, Address address) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -68,12 +72,15 @@ public class Resturant {
         mTags = tags;
         mYelpReviewCount = yelpReviewCount;
         mIsNewlyAdded = isNewlyAdded;
+        mAverageRating = averageRating;
         mAddress = address;
     }
 
-    public Resturant(int id, String name, String description, String coverImageUrl,
-                     long deliveryFee, boolean isPriceSurging, long resturantRating,
-                     List<String> tags, long yelpReviewCount, boolean isNewlyAdded,
+    public Resturant(int id, String name, String description,
+                     String coverImageUrl, long deliveryFee,
+                     boolean isPriceSurging, long resturantRating,
+                     List<String> tags, long yelpReviewCount,
+                     boolean isNewlyAdded, float averageRating,
                      Address address) {
         mId = id;
         mName = name;
@@ -85,6 +92,7 @@ public class Resturant {
         mTags = tags;
         mYelpReviewCount = yelpReviewCount;
         mIsNewlyAdded = isNewlyAdded;
+        mAverageRating = averageRating;
         mAddress = address;
     }
 
@@ -174,6 +182,14 @@ public class Resturant {
 
     public void setNewlyAdded(boolean newlyAdded) {
         mIsNewlyAdded = newlyAdded;
+    }
+
+    public float getAverageRating() {
+        return mAverageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        mAverageRating = averageRating;
     }
 
     public Address getAddress() {

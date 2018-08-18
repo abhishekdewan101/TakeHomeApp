@@ -19,7 +19,7 @@ import io.reactivex.FlowableOnSubscribe;
 public class DDLocationManager {
 
     public static final String TAG = DDConstants.PREFIX + DDLocationManager.class.getSimpleName();
-    public static final Long LOCATION_REQUEST_TIMEOUT = 15 * 1000L; // 15 seconds;
+    public static final Long LOCATION_REQUEST_TIMEOUT = 10 * 1000L; // 15 seconds;
 
     public Flowable<Location> getUserCurrentLocation(Context context) {
         DDLog.d(TAG,"getUserCurrentLocation");

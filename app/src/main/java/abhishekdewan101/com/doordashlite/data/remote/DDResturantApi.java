@@ -12,7 +12,9 @@ public interface DDResturantApi {
 
     @GET("v2/restaurant/")
     Flowable<List<Resturant>> getResturantListForLocation(@Query("lat") String lat,
-                                                                 @Query("lng") String lng);
+                                                          @Query("lng") String lng,
+                                                          @Query("limit") int limit,
+                                                          @Query("offset") int offset);
 
     @GET("v2/restaurant/{id}")
     Flowable<Resturant> getResturantDetailsForID(@Path("id") long id);

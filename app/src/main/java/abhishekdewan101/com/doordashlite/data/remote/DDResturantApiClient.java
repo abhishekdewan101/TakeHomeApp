@@ -12,6 +12,8 @@ public class DDResturantApiClient {
     private Retrofit mDDRetrofitClient;
     private DDResturantApi mResturantApi;
 
+    public static int mCurrentOffset = 0;
+
     public DDResturantApiClient() {
         createDDRetrofitClient();
         createDDResturantApis();
