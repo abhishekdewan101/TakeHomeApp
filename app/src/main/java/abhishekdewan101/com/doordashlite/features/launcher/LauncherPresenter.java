@@ -49,6 +49,7 @@ class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> imp
 
     private void saveResturantsToDB(List<Resturant> resturants,Context context) {
         DDLog.d(TAG,"saveResturantsToDB");
+        mBaseView.updateLoadingStatus();
         mCompositeDisposable.add(
         mLocalDBRepository.resetDBForNewLocation(context)
                 .flatMap(result -> Flowable.fromIterable(resturants))

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -45,6 +46,12 @@ public class ResturantDetailActivity extends BaseActivity<ResturantDetailPresent
     @BindView(R.id.loadingAnimation)
     LottieAnimationView mLoadingAnimation;
 
+    @BindView(R.id.noFeaturedItemLayout)
+    LinearLayout mNoListLayout;
+
+    @BindView(R.id.yelpRating)
+    TextView mYelpRating;
+
     private PopularItemListAdapater mPopularItemListAdapter;
 
 
@@ -83,20 +90,21 @@ public class ResturantDetailActivity extends BaseActivity<ResturantDetailPresent
     }
 
     @Override
-    public void showPopularItemList(List<Menu> items) {
-        List<Items> popularItems = getPopularItemsFromMenu(items);
+    public void showPopularItemList(List<Items> items) {
+        if(items.isEmpty()) {
+            showEmptyListView();
+            return;
+        }
         mPopularItemList.setLayoutManager(new LinearLayoutManager(this));
         mPopularItemListAdapter = new PopularItemListAdapater();
-        mPopularItemListAdapter.setAdapterData(popularItems);
+        mPopularItemList.setAdapter(mPopularItemListAdapter);
+        mPopularItemListAdapter.setAdapterData(items);
+        mPopularItemList.setVisibility(View.VISIBLE);
     }
 
-    private List<Items> getPopularItemsFromMenu(List<Menu> items) {
-        for(Menu menu: items) {
-            if (menu.mPopularItems != null && menu.mPopularItems.size() > 1) {
-                return menu.mPopularItems;
-            }
-        }
-        return new ArrayList<Items>();
+    private void showEmptyListView() {
+        mPopularItemList.setVisibility(View.GONE);
+        mNoListLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -105,6 +113,7 @@ public class ResturantDetailActivity extends BaseActivity<ResturantDetailPresent
         mResturantDetails.setText(resturant.mDescription);
         mResturantDelieveryCost.setText("$" + (int) resturant.mDeliveryFee);
         mResturantDelieveryTime.setText(Integer.toString(resturant.mDelieveryTime));
-        mPresenter.loadResturantPopularItems(resturant.mId);
+        mYelpRating.setText(String.format("%.2f", resturant.mAverageRating));
+        mPresenter.loadResturantPopularItems(this,resturant.mId);
     }
 }

@@ -8,9 +8,10 @@ import android.arch.persistence.room.Relation;
 
 import com.google.gson.annotations.SerializedName;
 
-
+@Entity(tableName = "items")
 public class Items {
 
+    @PrimaryKey
     @SerializedName("id")
     public int mId;
 
@@ -23,7 +24,7 @@ public class Items {
     @SerializedName("price")
     public int mPrice;
 
-    @SerializedName("image_url")
+    @SerializedName("img_url")
     public String mImageUrl;
 
     public int mResturantId;

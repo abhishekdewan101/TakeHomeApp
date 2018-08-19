@@ -18,6 +18,9 @@ public interface ResturantDao {
     @Query("SELECT * FROM resturants")
     Single<List<Resturant>> getAllCachedResturants();
 
+    @Query("SELECT * FROM items WHERE mResturantId = :resturantId")
+    Flowable<List<Items>> getAllItemsForResturant(long resturantId);
+
     @Query("SELECT * FROM resturants where mBusinessName LIKE :name")
     Single<List<Resturant>> getAllResturantsStartingWith(String name);
 
@@ -27,13 +30,32 @@ public interface ResturantDao {
     @Query("SELECT * FROM resturants ORDER BY mAverageRating DESC")
     Single<List<Resturant>> getAllResturantsByPopularity();
 
+    @Query("SELECT * FROM resturants ORDER BY mPriceRange ASC")
+    Single<List<Resturant>> getAllResturantsByPrice();
+
+    @Query("SELECT * FROM resturants ORDER BY mDeliveryFee ASC")
+    Single<List<Resturant>> getAllResturantsByDeliveryFee();
+
+    @Query("SELECT * FROM resturants WHERE mStatusType = 'open'")
+    Single<List<Resturant>> getAllOpenResturants();
+
+    @Query("SELECT * FROM resturants WHERE mStatusType = 'open' ORDER BY mDelieveryTime ASC")
+    Single<List<Resturant>> getAllResturantsByDeliveryTime();
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertResturant(Resturant resturant);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertItem(Items item);
 
     @Query("SELECT COUNT(*) FROM resturants")
     Flowable<Integer> provideNumberOfResturantsInDB();
 
     @Query("DELETE FROM resturants")
     void resetResturantsForNewLocation();
+
+    @Query("DELETE FROM items")
+    void resetItemsForNewLocation();
 
 }

@@ -39,23 +39,22 @@ class ResturantDetailPresenter extends BasePresenter<ResturantDetailActivity> im
     }
 
     @Override
-    public void loadResturantPopularItems(int resturantId) {
+    public void loadResturantPopularItems(Context context,int resturantId) {
         DDLog.d(TAG,"loadResturantPopularItems");
         mBaseView.showLoading();
         mCompositeDisposable.add(
-                mResturantRepository.getResturantDetailsForID(resturantId)
+                mLocalDBRepository.getItemsForResturant(context,resturantId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        resturant -> {
+                        items -> {
                             mBaseView.dismissLoading();
-                            mBaseView.showPopularItemList(resturant.mMenus);
+                            mBaseView.showPopularItemList(items);
                         },error -> {
                             mBaseView.dismissLoading();
                             mBaseView.handleError(error);
                         }
                 )
-
         );
     }
 }

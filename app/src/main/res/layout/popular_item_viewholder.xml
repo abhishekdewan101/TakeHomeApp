@@ -1,9 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:background="#FF0000"
-    android:layout_marginBottom="20dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="20dp"
+    android:paddingBottom="20dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/featuredItemHeader"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/search"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+
+            <LinearLayout
+                android:id="@+id/itemNameLayout"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="10dp"
+                android:layout_below="@id/featuredItemHeader">
+
+                <TextView
+                    android:id="@+id/featureItemName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/text_medium"
+                    android:text="Item Name"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:layout_below="@id/featuredItemHeader"
+                    android:layout_marginLeft="20dp"/>
+
+                <TextView
+                    android:id="@+id/featureItemDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/text_regular"
+                    android:text="Item Description"
+                    android:textSize="16dp"
+                    android:layout_below="@id/featureItemName"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/itemNameLayout"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/featureItemCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$42"
+                    android:layout_marginStart="10dp"
+                    style="@style/text_medium"
+                    android:layout_alignTop="@id/featureItemName"
+                    android:layout_alignStart="@id/featureItemCostText"
+                    android:layout_alignEnd="@id/featureItemCostText"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="40dp"
+                    android:textColor="#000000"
+                    android:textSize="16dp"/>
+
+                <TextView
+                    android:id="@+id/featureItemCostText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="price"
+                    style="@style/text_medium"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/featureItemCost"
+                    android:layout_alignTop="@id/featureItemDescription"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

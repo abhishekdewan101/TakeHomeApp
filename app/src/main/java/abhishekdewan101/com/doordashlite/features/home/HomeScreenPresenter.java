@@ -31,80 +31,160 @@ class HomeScreenPresenter extends BasePresenter<HomeScreenContract.HomeScreenVie
     @Override
     public void getResturantList(Context context) {
         DDLog.d(TAG, "getResturantList");
-        mLocalDBRepository.getAllResturantsInDB(context)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        resturants -> {
-                            mBaseView.onResturantsLoaded(resturants);
-                        }, error -> {
-                            mBaseView.handleError(error);
-                        }
-                );
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllResturantsInDB(context)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.onResturantsLoaded(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
     }
 
     @Override
     public void loadMoreResturants(Context context) {
         DDLog.d(TAG, "loadMoreResturantData");
-        mLocationRepository.getUserCurrentLocation(context)
-                .flatMap(location -> mResturantRepository.getResturantListForLocation(
-                        String.valueOf(location.getLatitude()),
-                        String.valueOf(location.getLongitude())
-                ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
-                .subscribe(
-                        resturants -> {
-                            mBaseView.onMoreResturantsDownloaded(resturants);
-                            saveResturantsToDB(resturants, context);
-                            DDResturantApiClient.mCurrentOffset++;
-                        }, errors -> {
-                            DDLog.e(TAG, errors.getMessage());
-                            mBaseView.handleError(errors);
-                        }
-                );
+        mCompositeDisposable.add(
+                mLocationRepository.getUserCurrentLocation(context)
+                        .flatMap(location -> mResturantRepository.getResturantListForLocation(
+                                String.valueOf(location.getLatitude()),
+                                String.valueOf(location.getLongitude())
+                        ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.onMoreResturantsDownloaded(resturants);
+                                    saveResturantsToDB(resturants, context);
+                                    DDResturantApiClient.mCurrentOffset++;
+                                }, errors -> {
+                                    DDLog.e(TAG, errors.getMessage());
+                                    mBaseView.handleError(errors);
+                                }
+                        )
+        );
     }
 
     @Override
-    public void getResturantsStartingWith(Context context,String s) {
-        DDLog.d(TAG,"getResturantsStartingWith");
-        mLocalDBRepository.getAllResturantsStartingWith(context, s + "%")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                  resturants -> {
-                      mBaseView.replaceResturants(resturants);
-                  }, error -> {
-                      mBaseView.handleError(error);
-                        }
-                );
+    public void getResturantsStartingWith(Context context, String s) {
+        DDLog.d(TAG, "getResturantsStartingWith");
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllResturantsStartingWith(context, s + "%")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.replaceResturants(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
     }
 
     @Override
     public void getResturantsFilterByPouplarity(Context context) {
-        DDLog.d(TAG,"getResturantsFilterByPopularity");
-        mLocalDBRepository.getAllResturantsByPopularity(context)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        resturants -> {
-                            mBaseView.replaceResturants(resturants);
-                        },error -> {
-                            mBaseView.handleError(error);
-                        }
-                );
+        DDLog.d(TAG, "getResturantsFilterByPopularity");
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllResturantsByPopularity(context)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.replaceResturants(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
     }
+
+    @Override
+    public void getResturantsFilterByPrice(Context context) {
+        DDLog.d(TAG, "getResturantsFilterByPrice");
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllResturantsByPrice(context)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.replaceResturants(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
+    }
+
+    @Override
+    public void getResturantsFilterByDeliveryTime(Context context) {
+        DDLog.d(TAG, "getResturantsFilterByPrice");
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllResturantsByDeliveryTime(context)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.replaceResturants(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
+    }
+
+    @Override
+    public void getAllOpenResturants(Context context) {
+        DDLog.d(TAG, "getResturantsFilterByPrice");
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllOpenResturants(context)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.replaceResturants(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
+    }
+
+
+    @Override
+    public void getResturantsFilterByDeliveryFee(Context context) {
+        DDLog.d(TAG, "getResturantsFilterByPrice");
+        mCompositeDisposable.add(
+                mLocalDBRepository.getAllResturantsByDelieveryFee(context)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                resturants -> {
+                                    mBaseView.replaceResturants(resturants);
+                                }, error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
+    }
+
 
     private void saveResturantsToDB(List<Resturant> resturants, Context context) {
         DDLog.d(TAG, "saveResturantsToDB");
-        Flowable.fromIterable(resturants).flatMap(
-                resturant -> mLocalDBRepository.insertResturantIntoDB(context, resturant)
-        ).subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(
-                        result -> {
-                        },
-                        error -> {
-                            mBaseView.handleError(error);
-                        }
-                );
+        mCompositeDisposable.add(
+                Flowable.fromIterable(resturants).flatMap(
+                        resturant -> mLocalDBRepository.insertResturantIntoDB(context, resturant)
+                ).subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .subscribe(
+                                result -> {
+                                },
+                                error -> {
+                                    mBaseView.handleError(error);
+                                }
+                        )
+        );
     }
 }

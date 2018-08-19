@@ -29,13 +29,14 @@
             app:lottie_fileName="loading.json" />
 
         <TextView
+            android:id="@+id/loadingStatusText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/text_condensed_regular"
-            android:textSize="12dp"
+            android:textSize="16dp"
             android:gravity="center"
             android:layout_below="@id/loadingAnimation"
-            android:text="Trying to determine your location to show resturants near you."/>
+            android:text="Trying to determine your location..."/>
 
 
     </LinearLayout>

@@ -8,6 +8,7 @@ public interface LauncherContract {
     interface LauncherView extends BaseView {
         void onResturantsDownloaded();
         void showOfflineAccessMode();
+        void updateLoadingStatus();
     }
 
     interface LauncherActions {

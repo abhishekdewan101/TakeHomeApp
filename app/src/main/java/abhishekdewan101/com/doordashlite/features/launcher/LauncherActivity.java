@@ -46,6 +46,9 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     @BindView(R.id.yesButton)
     TextView mYesButton;
 
+    @BindView(R.id.loadingStatusText)
+    TextView mLoadingStatusText;
+
     @Override
     protected LauncherPresenter createPresenter() {
         return new LauncherPresenter(this);
@@ -99,6 +102,11 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     public void showOfflineAccessMode() {
         DDLog.d(TAG, "Showing Offline Mode");
         mOfflineModeLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void updateLoadingStatus() {
+        mLoadingStatusText.setText("We are now looking for resturants that are nearby you.\nThank you for your patience...");
     }
 
     private void verifyRequiredPermissions() {

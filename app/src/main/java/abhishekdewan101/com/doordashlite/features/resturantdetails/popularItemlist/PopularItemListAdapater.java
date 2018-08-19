@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import abhishekdewan101.com.doordashlite.R;
@@ -24,7 +27,11 @@ public class PopularItemListAdapater extends RecyclerView.Adapter<PopularListVie
 
     @Override
     public void onBindViewHolder(@NonNull PopularListViewHolder popularListViewHolder, int i) {
-
+        popularListViewHolder.mFeatureItemCost.setText("$" + Double.toString((double)mAdapterData.get(i).mPrice/100));
+        Glide.with(popularListViewHolder.itemView).load(mAdapterData.get(i).mImageUrl)
+                .apply(RequestOptions.centerCropTransform()).into(popularListViewHolder.mFeatureItemHeader);
+        popularListViewHolder.mFeatureItemName.setText(mAdapterData.get(i).mName);
+        popularListViewHolder.mFeatureItemDescription.setText(mAdapterData.get(i).mDescription);
     }
 
     @Override

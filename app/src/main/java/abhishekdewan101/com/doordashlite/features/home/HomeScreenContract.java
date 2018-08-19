@@ -24,5 +24,13 @@ public interface HomeScreenContract {
         void getResturantsStartingWith(Context context,String s);
 
         void getResturantsFilterByPouplarity(Context context);
+
+        void getResturantsFilterByPrice(Context context);
+
+        void getResturantsFilterByDeliveryTime(Context context);
+
+        void getAllOpenResturants(Context context);
+
+        void getResturantsFilterByDeliveryFee(Context context);
     }
 }

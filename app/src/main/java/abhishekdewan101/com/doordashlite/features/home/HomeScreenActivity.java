@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -36,18 +37,18 @@ import io.reactivex.schedulers.Schedulers;
 import static abhishekdewan101.com.doordashlite.features.resturantdetails.ResturantDetailActivity.INTENT_RESTURANT_ID;
 
 public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
-        implements HomeScreenContract.HomeScreenView, ResturantListAdapter.ResturantListAdapterInterface{
+        implements HomeScreenContract.HomeScreenView, ResturantListAdapter.ResturantListAdapterInterface, FilterBottomSheetDialog.FilterBottomSheetInterface{
 
+    public static final String FILTER_BOTTOM_SHEET_DIALOG = "FILTER_BOTTOM_SHEET_DIALOG";
     @BindView(R.id.mainResturantList)
     RecyclerView mResturantList;
 
     @BindView(R.id.searchBar)
     EditText mSearchBar;
 
-    @BindView(R.id.filterLayout)
-    LinearLayout mFilterLayout;
-
     ResturantListAdapter mAdapter;
+
+    boolean mIsManaulChange = false;
 
     @Override
     protected HomeScreenPresenter createPresenter() {
@@ -78,20 +79,49 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
         mAdapter.addAdapaterData(null);
     }
 
-    @OnClick(R.id.sortButton)
-    public void showFilters() {
-        if (mFilterLayout.getVisibility() == View.VISIBLE) {
-            mFilterLayout.setVisibility(View.GONE);
-        } else {
-            mFilterLayout.setVisibility(View.VISIBLE);
-        }
+
+    @OnClick(R.id.filterButton)
+    public void showFilterBottomSheet() {
+        FilterBottomSheetDialog dialog = FilterBottomSheetDialog.newInstance();
+        dialog.setListener(this);
+        dialog.show(getSupportFragmentManager(), FILTER_BOTTOM_SHEET_DIALOG);
     }
 
-    @OnClick(R.id.popularityFilter)
+    @Override
     public void filterByPopularity() {
+        mIsManaulChange = true;
         mSearchBar.setText("");
         mPresenter.getResturantsFilterByPouplarity(this);
     }
+
+    @Override
+    public void filterByLowestDelivery() {
+        mIsManaulChange = true;
+        mSearchBar.setText("");
+        mPresenter.getResturantsFilterByDeliveryFee(this);
+    }
+
+    @Override
+    public void filterByOpenResturants() {
+        mIsManaulChange = true;
+        mSearchBar.setText("");
+        mPresenter.getAllOpenResturants(this);
+    }
+
+    @Override
+    public void filterByPrice() {
+        mIsManaulChange = true;
+        mSearchBar.setText("");
+        mPresenter.getResturantsFilterByPrice(this);
+    }
+
+    @Override
+    public void filterByFastestDelivery() {
+        mIsManaulChange = true;
+        mSearchBar.setText("");
+        mPresenter.getResturantsFilterByDeliveryTime(this);
+    }
+
 
     @Override
     public void onResturantsLoaded(List<Resturant> resturants) {
@@ -125,10 +155,14 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
                 .map(charSequence -> charSequence.toString())
                 .subscribe(
                         s -> {
-                            if (s.length() > 0) {
-                                mPresenter.getResturantsStartingWith(getApplicationContext(),s);
+                            if (!mIsManaulChange) {
+                                if (s.length() > 0) {
+                                    mPresenter.getResturantsStartingWith(getApplicationContext(),s);
+                                } else {
+                                    mPresenter.getResturantList(getApplicationContext());
+                                }
                             } else {
-                                mPresenter.getResturantList(getApplicationContext());
+                                mIsManaulChange = false;
                             }
                         },this::handleError
                 );

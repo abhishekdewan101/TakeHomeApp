@@ -31,7 +31,7 @@ public class LocalDBRepository {
     public Single<List<Resturant>> getAllResturantsInDB(Context context) {
         DDLog.d(TAG,"getAllResturantsInDB");
         return getDBFlowable(context).firstOrError().flatMap(
-          resturantDatabase -> resturantDatabase.resturantDao().getAllCachedResturants()
+          resturantDatabase -> resturantDatabase.resturantDao().getAllOpenResturants()
         );
     }
 
@@ -49,22 +49,56 @@ public class LocalDBRepository {
         );
     }
 
-    public Single<Resturant> getResturantDetailsForId(Context context,long id) {
-        DDLog.d(TAG,"getResturantDetailsForId");
+    public Single<List<Resturant>> getAllResturantsByPrice(Context context) {
+        DDLog.d(TAG,"getAllResturantsByPopularity");
         return getDBFlowable(context).firstOrError().flatMap(
-          resturantDatabase -> resturantDatabase.resturantDao().getResturantFromId(id)
+                resturantDatabase -> resturantDatabase.resturantDao().getAllResturantsByPrice()
         );
     }
 
+    public Single<List<Resturant>> getAllResturantsByDeliveryTime(Context context) {
+        DDLog.d(TAG,"getAllResturantsByDeliveryTime");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllResturantsByDeliveryTime()
+        );
+    }
 
+    public Single<List<Resturant>> getAllResturantsByDelieveryFee(Context context) {
+        DDLog.d(TAG,"getAllResturantsByDeliveryTime");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllResturantsByDeliveryFee()
+        );
+    }
+
+    public Single<List<Resturant>> getAllOpenResturants(Context context) {
+        DDLog.d(TAG,"getAllOpenResturants");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllOpenResturants()
+        );
+    }
+
+    public Single<Resturant> getResturantDetailsForId(Context context,long id) {
+        DDLog.d(TAG,"getResturantDetailsForId");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getResturantFromId(id)
+        );
+    }
 
     public Flowable<Integer> resetDBForNewLocation(Context context) {
         DDLog.d(TAG,"resetDBForNewLocation");
         return getDBFlowable(context).flatMap(
                 resturantDatabase -> {
+                    resturantDatabase.resturantDao().resetItemsForNewLocation();
                     resturantDatabase.resturantDao().resetResturantsForNewLocation();
                     return Flowable.just(1);
                 }
+        );
+    }
+
+    public Flowable<List<Items>> getItemsForResturant(Context context,long id) {
+        DDLog.d(TAG,"getItemsForResturant");
+        return getDBFlowable(context).flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllItemsForResturant(id)
         );
     }
 
@@ -73,6 +107,16 @@ public class LocalDBRepository {
         return getDBFlowable(context).flatMap(
           resturantDatabase -> {
             resturantDatabase.resturantDao().insertResturant(resturant);
+            if (resturant.mMenus != null && resturant.mMenus.size() >= 1) {
+                for (Menu menu : resturant.mMenus) {
+                    if (menu.mPopularItems != null && menu.mPopularItems.size() > 1) {
+                        for (Items item : menu.mPopularItems) {
+                            item.mResturantId = resturant.getId();
+                            resturantDatabase.resturantDao().insertItem(item);
+                        }
+                    }
+                }
+            }
             return Flowable.just(1);
           }
         );

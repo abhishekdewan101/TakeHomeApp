@@ -110,6 +110,50 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="RATINGS"
+            style="@style/text_medium"
+            android:textSize="24dp"
+            android:textColor="#000000"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/yelp"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/yelpRating"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_condensed_bold"
+                android:textSize="16dp"
+                android:text="4.78"/>
+
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,7 +170,35 @@
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:visibility="gone"
-        android:paddingLeft="20dp"/>
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/noFeaturedItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:gravity="center_horizontal">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="error.json"
+            app:lottie_loop="true" />
+
+        <TextView
+            style="@style/text_condensed_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Oops! Looks like the resturant hasn't \n uploaded any items."
+            android:textColor="#ed3221" />
+
+    </LinearLayout>
 
 
     <com.airbnb.lottie.LottieAnimationView

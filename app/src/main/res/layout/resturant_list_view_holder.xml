@@ -87,7 +87,7 @@
             android:id="@+id/resturantCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cost Range"
+            android:text="Price Range"
             style="@style/text_medium"
             android:textSize="12dp"
             android:textColor="#FFFFFF"
