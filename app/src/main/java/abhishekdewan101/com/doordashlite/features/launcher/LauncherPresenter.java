@@ -45,33 +45,6 @@ class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> imp
                         }
                 )
         );
-
-//        mCompositeDisposable.add(
-//                mLocationRepository.getUserCurrentLocation(context)
-//                        .flatMap(location -> mResturantRepository.getResturantListForLocation(
-//                                String.valueOf(location.getLatitude()),
-//                                String.valueOf(location.getLongitude())
-//                        )
-//                                .flatMap(resturants -> mLocalDBRepository.resetDBForNewLocation(context)
-//                                        .subscribeOn(Schedulers.io())
-//                                        .observeOn(Schedulers.io())
-//                                        .flatMap(
-//                                                result -> Flowable.fromIterable(resturants)
-//                                        ))
-//                                .flatMap(resturant -> mLocalDBRepository.insertResturantIntoDB(context, resturant)
-//                                        .subscribeOn(Schedulers.io()).observeOn(Schedulers.io()))
-//                                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
-//                        .subscribe(result -> {
-//                        }, error -> {
-//                            DDLog.e(TAG, error.getMessage());
-//                            mBaseView.dismissLoading();
-//                            mBaseView.handleError(error);
-//                        }, () -> {
-//                            mBaseView.dismissLoading();
-//                            DDResturantApiClient.mCurrentOffset++;
-//                            mBaseView.onResturantsDownloaded();
-//                        })
-//        );
     }
 
     private void saveResturantsToDB(List<Resturant> resturants,Context context) {

@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/header_image"
+    <LinearLayout
+        android:id="@+id/backButtonLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        tools:src="@drawable/search"/>
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/back"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textSize="24dp"
+            android:layout_gravity="center_vertical"
+            style="@style/text_regular"
+            android:textColor="#ed3221"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/resturantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/header_image"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:text="Names"
+        style="@style/text_medium"
         android:textColor="#000000"
         android:textSize="36dp" />
-
 
     <TextView
         android:id="@+id/resturantDetails"
@@ -28,25 +50,93 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_below="@id/resturantName"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Names"
+        style="@style/text_regular"
         android:fontFamily="sans-serif-light"
         android:textColor="#000000"
-        android:textSize="36dp" />
+        android:textSize="16dp" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/resturantDelieveryCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/resturantDelieveryText"
+            android:layout_alignEnd="@id/resturantDelieveryText"
+            android:text="$2.23"
+            android:gravity="center"
+            android:textSize="24dp"
+            style="@style/text_medium" />
+
+        <TextView
+            android:id="@+id/resturantDelieveryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="delievery"
+            style="@style/text_medium"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:layout_below="@id/resturantDelieveryCost"/>
+
+
+        <TextView
+            android:id="@+id/resturantDelieveryTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/resturantDelieveryTimeValue"
+            android:layout_alignEnd="@id/resturantDelieveryTimeValue"
+            android:text="46"
+            android:gravity="center"
+            android:textSize="24dp"
+            style="@style/text_medium" />
+
+        <TextView
+            android:id="@+id/resturantDelieveryTimeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="mins"
+            android:layout_toRightOf="@id/resturantDelieveryCost"
+            style="@style/text_medium"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:layout_below="@id/resturantDelieveryTimeText"/>
+
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/resturantTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/resturantDetails"
         android:layout_marginTop="20dp"
-        android:text="Tags"
-        android:textColor="#000000"
-        android:textSize="36dp" />
+        android:text="FEATURED ITEMS"
+        style="@style/text_medium"
+        android:textSize="24dp"
+        android:textColor="#000000"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/popularItemList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:paddingLeft="20dp"/>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_fileName="loading.json" />
 
 
 
-
-</RelativeLayout>
+</LinearLayout>

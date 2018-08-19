@@ -73,12 +73,16 @@ public class Resturant {
     @SerializedName("header_img_url")
     public String mHeaderImageUrl;
 
+    @SerializedName("asap_time")
+    public int mDelieveryTime;
 
-    public Resturant(int id, String name, String description, String coverImageUrl, long deliveryFee,
-                     boolean isPriceSurging, List<Menu> menus, long resturantRating, List<String> tags,
-                     long yelpReviewCount, boolean isNewlyAdded, float averageRating,
-                     Address address, String asapTime, String statusType, Business business,
-                     int priceRange, String headerImageUrl) {
+
+    public Resturant(int id, String name, String description, String coverImageUrl,
+                     long deliveryFee, boolean isPriceSurging, List<Menu> menus,
+                     long resturantRating, List<String> tags, long yelpReviewCount,
+                     boolean isNewlyAdded, float averageRating, Address address,
+                     String asapTime, String statusType, Business business,
+                     int priceRange, String headerImageUrl, int delieveryTime) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -97,13 +101,15 @@ public class Resturant {
         mBusiness = business;
         mPriceRange = priceRange;
         mHeaderImageUrl = headerImageUrl;
+        mDelieveryTime = delieveryTime;
     }
 
     public Resturant(int id, String name, String description, String coverImageUrl,
                      long deliveryFee, boolean isPriceSurging, long resturantRating,
-                     List<String> tags, long yelpReviewCount, boolean isNewlyAdded, float averageRating,
-                     Address address, String asapTime, String statusType, Business business,
-                     int priceRange, String headerImageUrl) {
+                     List<String> tags, long yelpReviewCount, boolean isNewlyAdded,
+                     float averageRating, Address address, String asapTime,
+                     String statusType, Business business, int priceRange,
+                     String headerImageUrl, int delieveryTime) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -121,6 +127,7 @@ public class Resturant {
         mBusiness = business;
         mPriceRange = priceRange;
         mHeaderImageUrl = headerImageUrl;
+        mDelieveryTime = delieveryTime;
     }
 
     public int getId() {
@@ -249,5 +256,29 @@ public class Resturant {
 
     public void setStatusType(String statusType) {
         mStatusType = statusType;
+    }
+
+    public int getPriceRange() {
+        return mPriceRange;
+    }
+
+    public void setPriceRange(int priceRange) {
+        mPriceRange = priceRange;
+    }
+
+    public String getHeaderImageUrl() {
+        return mHeaderImageUrl;
+    }
+
+    public void setHeaderImageUrl(String headerImageUrl) {
+        mHeaderImageUrl = headerImageUrl;
+    }
+
+    public int getDelieveryTime() {
+        return mDelieveryTime;
+    }
+
+    public void setDelieveryTime(int delieveryTime) {
+        mDelieveryTime = delieveryTime;
     }
 }

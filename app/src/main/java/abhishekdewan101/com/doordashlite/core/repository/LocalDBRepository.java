@@ -7,6 +7,7 @@ import java.util.List;
 
 import abhishekdewan101.com.doordashlite.data.local.ResturantDatabase;
 import abhishekdewan101.com.doordashlite.data.model.Items;
+import abhishekdewan101.com.doordashlite.data.model.Menu;
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
@@ -61,17 +62,9 @@ public class LocalDBRepository {
         DDLog.d(TAG,"resetDBForNewLocation");
         return getDBFlowable(context).flatMap(
                 resturantDatabase -> {
-                    resturantDatabase.resturantDao().resetItemsForNewLocation();
                     resturantDatabase.resturantDao().resetResturantsForNewLocation();
                     return Flowable.just(1);
                 }
-        );
-    }
-
-    public Flowable<List<Items>> getItemsForResturant(Context context,long id) {
-        DDLog.d(TAG,"getItemsForResturant");
-        return getDBFlowable(context).flatMap(
-                resturantDatabase -> resturantDatabase.resturantDao().getAllItemsForResturant(id)
         );
     }
 
@@ -80,14 +73,6 @@ public class LocalDBRepository {
         return getDBFlowable(context).flatMap(
           resturantDatabase -> {
             resturantDatabase.resturantDao().insertResturant(resturant);
-            if (resturant.mMenus != null && resturant.mMenus.size() > 1) {
-                if (resturant.mMenus.get(0).mPopularItems != null) {
-                    for (Items item : resturant.mMenus.get(0).mPopularItems) {
-                        item.mResturantId = resturant.getId();
-                        resturantDatabase.resturantDao().insertItem(item);
-                    }
-                }
-            }
             return Flowable.just(1);
           }
         );
