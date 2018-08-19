@@ -11,7 +11,7 @@ public class BasePresenter<V extends BaseView> {
     protected LocationRepository mLocationRepository;
 
     protected V mBaseView;
-    private CompositeDisposable mCompositeDisposable;
+    public CompositeDisposable mCompositeDisposable;
 
     public BasePresenter(V view) {
         attachView(view);

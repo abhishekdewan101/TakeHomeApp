@@ -1,4 +1,4 @@
-package abhishekdewan101.com.doordashlite.data;
+package abhishekdewan101.com.doordashlite.data.local;
 
 import android.location.Location;
 

@@ -15,8 +15,8 @@ public class DDResturantManager {
     }
 
 
-    public Flowable<List<Resturant>> getResturantsForLocation(String lat, String lng,int offset) {
-        return mApiClient.getResturantApi().getResturantListForLocation(lat,lng,50,offset);
+    public Flowable<List<Resturant>> getResturantsForLocation(String lat, String lng) {
+        return mApiClient.getResturantApi().getResturantListForLocation(lat,lng);
     }
 
     public Flowable<Resturant> getResturantDetailsForResturant(long id) {

@@ -18,9 +18,9 @@ public class ResturantRepository {
         mResturantManager = new DDResturantManager();
     }
 
-    public Flowable<List<Resturant>> getResturantListForLocation(String lat, String lng,int offset) {
+    public Flowable<List<Resturant>> getResturantListForLocation(String lat, String lng) {
         DDLog.d(TAG,"getResturantListForLocation");
-        return mResturantManager.getResturantsForLocation(lat,lng,offset);
+        return mResturantManager.getResturantsForLocation(lat,lng);
     }
 
     public Flowable<Resturant> getResturantDetailsForID(long id) {

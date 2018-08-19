@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLException;
+
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -34,5 +40,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mPresenter.detachView();
         }
         super.onDestroy();
+    }
+
+    protected boolean isThrowableNetworkError(Throwable throwable) {
+        return (throwable instanceof SocketException) || (throwable instanceof UnknownHostException) ||
+                (throwable instanceof SocketTimeoutException) || (throwable instanceof SSLException);
     }
 }

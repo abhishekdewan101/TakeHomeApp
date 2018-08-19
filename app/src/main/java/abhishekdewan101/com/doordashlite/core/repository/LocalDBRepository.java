@@ -34,6 +34,29 @@ public class LocalDBRepository {
         );
     }
 
+    public Single<List<Resturant>> getAllResturantsStartingWith(Context context,String name) {
+        DDLog.d(TAG,"getAllResturantsStartingWith");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllResturantsStartingWith(name)
+        );
+    }
+
+    public Single<List<Resturant>> getAllResturantsByPopularity(Context context) {
+        DDLog.d(TAG,"getAllResturantsByPopularity");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllResturantsByPopularity()
+        );
+    }
+
+    public Single<Resturant> getResturantDetailsForId(Context context,long id) {
+        DDLog.d(TAG,"getResturantDetailsForId");
+        return getDBFlowable(context).firstOrError().flatMap(
+          resturantDatabase -> resturantDatabase.resturantDao().getResturantFromId(id)
+        );
+    }
+
+
+
     public Flowable<Integer> resetDBForNewLocation(Context context) {
         DDLog.d(TAG,"resetDBForNewLocation");
         return getDBFlowable(context).flatMap(

@@ -12,15 +12,35 @@
         android:layout_centerInParent="true"
         app:srcCompat="@drawable/logo" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loadingAnimation"
+    <LinearLayout
+        android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+        android:orientation="vertical"
         android:visibility="gone"
-        app:lottie_fileName="loading.json"
-        android:layout_below="@id/imageView"/>
+        android:layout_below="@id/imageView">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAnimation"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_fileName="loading.json" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text_condensed_regular"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:layout_below="@id/loadingAnimation"
+            android:text="Trying to determine your location to show resturants near you."/>
+
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/offlineModeLayout"
@@ -36,13 +56,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:text="Downloading new data failed. Would you like to view offline data?"/>
+            android:textSize="18dp"
+            style="@style/text_condensed_bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Downloading new data failed.\n Would you like to view offline data?"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -51,7 +74,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="#ed3221"
+                android:background="@drawable/button_ripple"
                 android:textColor="#FFFFFF"
                 android:layout_margin="10dp"
                 android:text="No"/>
@@ -61,7 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_margin="10dp"
                 android:layout_height="40dp"
-                android:background="#ed3221"
+                android:background="@drawable/button_ripple"
                 android:textColor="#FFFFFF"
                 android:layout_weight="1"
                 android:gravity="center"

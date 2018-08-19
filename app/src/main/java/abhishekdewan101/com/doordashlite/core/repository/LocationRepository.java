@@ -4,7 +4,7 @@ import android.content.Context;
 import android.location.Location;
 
 import abhishekdewan101.com.doordashlite.core.managers.DDLocationManager;
-import abhishekdewan101.com.doordashlite.data.AppCache;
+import abhishekdewan101.com.doordashlite.data.local.AppCache;
 import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;
@@ -33,6 +33,5 @@ public class LocationRepository {
                     }
             );
         }
-
     }
 }

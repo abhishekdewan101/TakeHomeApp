@@ -6,18 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import abhishekdewan101.com.doordashlite.R;
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
+import abhishekdewan101.com.doordashlite.utils.DDConstants;
 
 public class ResturantListAdapter extends RecyclerView.Adapter<ResturantListViewHolder> {
 
     List<Resturant> mAdapterData;
-    ResturantListInterface mResturantListListener;
 
     final int LOADING_OFFSET = 20;
     boolean mHasLoadingDataBeenInitiated = false;
+    private ResturantListAdapterInterface mListener;
 
     @NonNull
     @Override
@@ -28,14 +32,49 @@ public class ResturantListAdapter extends RecyclerView.Adapter<ResturantListView
 
     @Override
     public void onBindViewHolder(@NonNull ResturantListViewHolder resturantListViewHolder, int i) {
-        isLoadingNewDataNeeded(i);
-        resturantListViewHolder.mResturantName.setText(i+ "  -  " + mAdapterData.get(i).mName);
+        resturantListViewHolder.mViewHolderBackground.setBackgroundResource(getDrawable(i));
+        resturantListViewHolder.mResturantName.setText(mAdapterData.get(i).mBusiness.mBusinessName);
+        Glide.with(resturantListViewHolder.mResturantImage).load(mAdapterData.get(i).mCoverImageUrl)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(resturantListViewHolder.mResturantImage);
+        resturantListViewHolder.mResturantDetails.setText(mAdapterData.get(i).mDescription);
+        resturantListViewHolder.mRatingText.setText(Float.toString(mAdapterData.get(i).mAverageRating));
+        resturantListViewHolder.mRatingCount.setText(Long.toString(mAdapterData.get(i).mResturantRating) + " ratings");
+        resturantListViewHolder.itemView.setOnClickListener(view -> {
+            mListener.onResturantClicked(mAdapterData.get(i).mBusiness.mBusinessId);
+        });
+
+        if (mAdapterData.get(i).mIsPriceSurging) {
+            resturantListViewHolder.mSurgePricingText.setText("Yes");
+        } else {
+            resturantListViewHolder.mSurgePricingText.setText("No");
+        }
+
+        if (mAdapterData.get(i).mAsapTime.contains("Pre")) {
+            resturantListViewHolder.mResturantTimeText.setText("Pre-Order");
+        } else {
+            resturantListViewHolder.mResturantTimeText.setText(mAdapterData.get(i).mAsapTime);
+        }
+
+        if (mAdapterData.get(i).mPriceRange == 1) {
+            resturantListViewHolder.mResturantCostText.setText("Low");
+        } else if (mAdapterData.get(i).mPriceRange == 2) {
+            resturantListViewHolder.mResturantCostText.setText("Medium");
+        } else {
+            resturantListViewHolder.mResturantCostText.setText("High");
+        }
+
     }
 
-    private void isLoadingNewDataNeeded(int i) {
-        if (i >= mAdapterData.size() - LOADING_OFFSET && !mHasLoadingDataBeenInitiated) {
-            mResturantListListener.loadMoreResturants();
-            mHasLoadingDataBeenInitiated = true;
+    private int getDrawable(int i) {
+        if (i % 4 == 0) {
+            return DDConstants.RESTURANT_LIST_BG[3];
+        } else if (i % 3 == 0) {
+            return DDConstants.RESTURANT_LIST_BG[2];
+        } else if (i % 2 == 0) {
+            return DDConstants.RESTURANT_LIST_BG[1];
+        } else {
+            return DDConstants.RESTURANT_LIST_BG[0];
         }
     }
 
@@ -60,11 +99,11 @@ public class ResturantListAdapter extends RecyclerView.Adapter<ResturantListView
         this.notifyItemInserted(lastPosition);
     }
 
-    public void setResturantListInterface(ResturantListInterface listener) {
-        mResturantListListener = listener;
+    public void setListener(ResturantListAdapterInterface listener) {
+        mListener = listener;
     }
 
-    public interface ResturantListInterface {
-        void loadMoreResturants();
+    public interface ResturantListAdapterInterface {
+        void onResturantClicked(int id);
     }
 }

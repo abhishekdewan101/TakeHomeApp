@@ -21,6 +21,15 @@ public interface ResturantDao {
     @Query("SELECT * FROM items WHERE mResturantId = :resturantId")
     Flowable<List<Items>> getAllItemsForResturant(long resturantId);
 
+    @Query("SELECT * FROM resturants where mBusinessName LIKE :name")
+    Single<List<Resturant>> getAllResturantsStartingWith(String name);
+
+    @Query("SELECT * FROM resturants where mBusinessId = :id")
+    Single<Resturant> getResturantFromId(long id);
+
+    @Query("SELECT * FROM resturants ORDER BY mAverageRating DESC")
+    Single<List<Resturant>> getAllResturantsByPopularity();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertResturant(Resturant resturant);
 

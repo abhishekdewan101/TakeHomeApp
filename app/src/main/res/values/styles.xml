@@ -8,4 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="text_regular">
+        <item name="android:fontFamily">san-serif-light</item>
+    </style>
+
+    <style name="text_medium">
+        <item name="android:fontFamily">sec-roboto-light</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_condensed_regular">
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+
+    <style name="text_condensed_bold">
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

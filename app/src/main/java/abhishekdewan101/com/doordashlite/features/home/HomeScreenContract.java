@@ -12,11 +12,17 @@ public interface HomeScreenContract {
         void onResturantsLoaded(List<Resturant> resturants);
 
         void onMoreResturantsDownloaded(List<Resturant> resturants);
+
+        void replaceResturants(List<Resturant> resturants);
     }
 
     interface HomeScreenActions {
         void getResturantList(Context context);
 
         void loadMoreResturants(Context context);
+
+        void getResturantsStartingWith(Context context,String s);
+
+        void getResturantsFilterByPouplarity(Context context);
     }
 }

@@ -24,12 +24,18 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static abhishekdewan101.com.doordashlite.utils.ErrorCodes.LOCATION_MANAGER_NOT_FOUND_EXCEPTION;
+import static abhishekdewan101.com.doordashlite.utils.ErrorCodes.LOCATION_TIMEOUT_EXCEPTION;
+
 public class LauncherActivity extends BaseActivity<LauncherPresenter> implements LauncherContract.LauncherView {
 
     public static final int REQUIRED_PERMISSION_REQUEST_CODE = 200;
 
     @BindView(R.id.offlineModeLayout)
     LinearLayout mOfflineModeLayout;
+
+    @BindView(R.id.loadingLayout)
+    LinearLayout mLoadingLayout;
 
     @BindView(R.id.loadingAnimation)
     LottieAnimationView mLoadingAnimation;
@@ -39,7 +45,6 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
 
     @BindView(R.id.yesButton)
     TextView mYesButton;
-    private long mStartTime;
 
     @Override
     protected LauncherPresenter createPresenter() {
@@ -52,17 +57,16 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
         setContentView(R.layout.activity_launcher);
         mUnBinder = ButterKnife.bind(this);
         verifyRequiredPermissions();
-        mStartTime = System.currentTimeMillis();
     }
 
     @Override
     public void showLoading() {
-
+        mLoadingLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void dismissLoading() {
-
+        mLoadingLayout.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.noButton)
@@ -77,22 +81,23 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
 
     @Override
     public void handleError(Throwable throwable) {
-        if (throwable.getMessage().contains("Timed Out")) {
+        dismissLoading();
+        if (throwable.getMessage().contentEquals(String.valueOf(LOCATION_MANAGER_NOT_FOUND_EXCEPTION))
+                || throwable.getMessage().contentEquals(String.valueOf(LOCATION_TIMEOUT_EXCEPTION))
+                || isThrowableNetworkError(throwable)) {
             mPresenter.doesLocalDBHaveData(this);
         }
     }
 
     @Override
     public void onResturantsDownloaded() {
-        DDLog.e(TAG,"Total Load Time Taken - " + (System.currentTimeMillis() - mStartTime));
         startActivity(new Intent(this, HomeScreenActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         this.finish();
     }
 
     @Override
     public void showOfflineAccessMode() {
-        DDLog.d(TAG,"Showing Offline Mode");
-        mLoadingAnimation.setVisibility(View.GONE);
+        DDLog.d(TAG, "Showing Offline Mode");
         mOfflineModeLayout.setVisibility(View.VISIBLE);
     }
 
@@ -108,7 +113,6 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     }
 
     private void appHasRequiredPermissions() {
-        mLoadingAnimation.setVisibility(View.VISIBLE);
         mPresenter.getResturantsForCurrentLocation(this);
     }
 

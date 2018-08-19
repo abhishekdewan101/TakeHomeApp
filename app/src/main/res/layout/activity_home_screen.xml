@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/headingText"
@@ -9,11 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
+        style="@style/text_medium"
         android:text="Browse"
         android:textColor="#000000"
         android:textSize="36dp" />
 
     <TextView
+        android:id="@+id/filterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/headingText"
@@ -21,6 +24,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:text="Filter"
+        style="@style/text_condensed_regular"
         android:textColor="#FF0000"
         android:textSize="18dp" />
 
@@ -33,6 +37,8 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
         android:layout_weight="5"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:background="@drawable/search_bar_background">
 
 
@@ -46,26 +52,84 @@
             android:src="@drawable/search" />
 
         <EditText
+            android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/searchButton"
+            android:layout_toLeftOf="@id/sortButton"
             android:background="@null"
             android:focusableInTouchMode="true"
             android:hint="Search For Resturant"
             android:inputType="text"
             android:maxLines="1"
+            android:imeOptions="actionDone"
             android:textColor="#535759"
+            style="@style/text_condensed_regular"
             android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/sortButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SORT"
+            android:textColor="#FF0000"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"/>
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/searchLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="5"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/popularityFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Popularity"/>
+
+        <TextView
+            android:id="@+id/priceFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:text="Price"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:text="Filter 3"/>
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mainResturantList"
-        android:layout_below="@id/searchLayout"
-        android:padding="20dp"
+        android:layout_below="@id/filterLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

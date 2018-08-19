@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/header_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        tools:src="@drawable/search"/>
+
+    <TextView
+        android:id="@+id/resturantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/header_image"
+        android:layout_marginTop="20dp"
+        android:text="Names"
+        android:textColor="#000000"
+        android:textSize="36dp" />
+
+
+    <TextView
+        android:id="@+id/resturantDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/resturantName"
+        android:layout_marginTop="20dp"
+        android:text="Names"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textSize="36dp" />
+
+
+    <TextView
+        android:id="@+id/resturantTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/resturantDetails"
+        android:layout_marginTop="20dp"
+        android:text="Tags"
+        android:textColor="#000000"
+        android:textSize="36dp" />
+
+
+
+
+</RelativeLayout>

@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import butterknife.OnItemSelected;
+
 @Entity(tableName = "resturants")
 public class Resturant {
 
@@ -55,12 +57,28 @@ public class Resturant {
     @SerializedName("address")
     public Address mAddress;
 
-    public Resturant(int id, String name, String description,
-                     String coverImageUrl, long deliveryFee,
-                     boolean isPriceSurging, List<Menu> menus,
-                     long resturantRating, List<String> tags,
-                     long yelpReviewCount, boolean isNewlyAdded,
-                     float averageRating, Address address) {
+    @SerializedName("status")
+    public String mAsapTime;
+
+    @SerializedName("status_type")
+    public String mStatusType;
+
+    @SerializedName("business")
+    @Embedded
+    public Business mBusiness;
+
+    @SerializedName("price_range")
+    public int mPriceRange;
+
+    @SerializedName("header_img_url")
+    public String mHeaderImageUrl;
+
+
+    public Resturant(int id, String name, String description, String coverImageUrl, long deliveryFee,
+                     boolean isPriceSurging, List<Menu> menus, long resturantRating, List<String> tags,
+                     long yelpReviewCount, boolean isNewlyAdded, float averageRating,
+                     Address address, String asapTime, String statusType, Business business,
+                     int priceRange, String headerImageUrl) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -74,14 +92,18 @@ public class Resturant {
         mIsNewlyAdded = isNewlyAdded;
         mAverageRating = averageRating;
         mAddress = address;
+        mAsapTime = asapTime;
+        mStatusType = statusType;
+        mBusiness = business;
+        mPriceRange = priceRange;
+        mHeaderImageUrl = headerImageUrl;
     }
 
-    public Resturant(int id, String name, String description,
-                     String coverImageUrl, long deliveryFee,
-                     boolean isPriceSurging, long resturantRating,
-                     List<String> tags, long yelpReviewCount,
-                     boolean isNewlyAdded, float averageRating,
-                     Address address) {
+    public Resturant(int id, String name, String description, String coverImageUrl,
+                     long deliveryFee, boolean isPriceSurging, long resturantRating,
+                     List<String> tags, long yelpReviewCount, boolean isNewlyAdded, float averageRating,
+                     Address address, String asapTime, String statusType, Business business,
+                     int priceRange, String headerImageUrl) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -94,6 +116,11 @@ public class Resturant {
         mIsNewlyAdded = isNewlyAdded;
         mAverageRating = averageRating;
         mAddress = address;
+        mAsapTime = asapTime;
+        mStatusType = statusType;
+        mBusiness = business;
+        mPriceRange = priceRange;
+        mHeaderImageUrl = headerImageUrl;
     }
 
     public int getId() {
@@ -198,5 +225,29 @@ public class Resturant {
 
     public void setAddress(Address address) {
         mAddress = address;
+    }
+
+    public Business getBusiness() {
+        return mBusiness;
+    }
+
+    public void setBusiness(Business business) {
+        mBusiness = business;
+    }
+
+    public String getAsapTime() {
+        return mAsapTime;
+    }
+
+    public void setAsapTime(String asapTime) {
+        mAsapTime = asapTime;
+    }
+
+    public String getStatusType() {
+        return mStatusType;
+    }
+
+    public void setStatusType(String statusType) {
+        mStatusType = statusType;
     }
 }
