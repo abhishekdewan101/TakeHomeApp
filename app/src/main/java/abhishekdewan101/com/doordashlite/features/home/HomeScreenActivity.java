@@ -1,8 +1,10 @@
 package abhishekdewan101.com.doordashlite.features.home;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -27,6 +29,7 @@ import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
 import abhishekdewan101.com.doordashlite.features.base.BasePresenter;
 import abhishekdewan101.com.doordashlite.features.home.resturantlist.ResturantListAdapter;
 import abhishekdewan101.com.doordashlite.features.resturantdetails.ResturantDetailActivity;
+import abhishekdewan101.com.doordashlite.features.tagfilter.TagFilterActivity;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,11 +38,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 import static abhishekdewan101.com.doordashlite.features.resturantdetails.ResturantDetailActivity.INTENT_RESTURANT_ID;
+import static abhishekdewan101.com.doordashlite.features.tagfilter.TagFilterActivity.TAG_LIST;
 
 public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
         implements HomeScreenContract.HomeScreenView, ResturantListAdapter.ResturantListAdapterInterface, FilterBottomSheetDialog.FilterBottomSheetInterface{
 
     public static final String FILTER_BOTTOM_SHEET_DIALOG = "FILTER_BOTTOM_SHEET_DIALOG";
+    public static final int FILTER_TAG_ACTIVITY_CODE = 2029;
+    public static final String FILTER_TAG_ACTIVITY_RESULT = "ACTIVITY_TAG_RESULT";
     @BindView(R.id.mainResturantList)
     RecyclerView mResturantList;
 
@@ -109,6 +115,12 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
     }
 
     @Override
+    public void filterByTags() {
+        DDLog.d(TAG,"filterByTagsClicked");
+        startActivityForResult(new Intent(this, TagFilterActivity.class), FILTER_TAG_ACTIVITY_CODE);
+    }
+
+    @Override
     public void filterByPrice() {
         mIsManaulChange = true;
         mSearchBar.setText("");
@@ -171,5 +183,15 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
     @Override
     public void onResturantClicked(int id) {
         startActivity(new Intent(this, ResturantDetailActivity.class).putExtra(INTENT_RESTURANT_ID,id));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == FILTER_TAG_ACTIVITY_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Bundle b = data.getBundleExtra(FILTER_TAG_ACTIVITY_RESULT);
+                mPresenter.filterResturantsByTags(this,b.getStringArrayList(TAG_LIST));
+            }
+        }
     }
 }

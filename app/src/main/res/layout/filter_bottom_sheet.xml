@@ -12,71 +12,112 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="SORT BY"
+        android:text="FILTER BY"
         android:textColor="#000000"
         android:textSize="24dp" />
 
-    <TextView
-        android:id="@+id/lowestDeliveryFee"
-        style="@style/text_condensed_bold"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/button_ripple"
-        android:gravity="center"
-        android:text="Lowest Delivery Fee"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/fastestDelivery"
-        style="@style/text_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/button_ripple"
-        android:gravity="center"
-        android:text="Fatest Delivery"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp" />
+        <TextView
+            android:id="@+id/lowestDeliveryFee"
+            style="@style/text_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_ripple"
+            android:gravity="center"
+            android:text="Lowest Delivery Fee"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/popularityFilter"
-        style="@style/text_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/button_ripple"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:text="Popularity"
-        android:textSize="16dp" />
+        <TextView
+            android:id="@+id/fastestDelivery"
+            style="@style/text_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_ripple"
+            android:gravity="center"
+            android:text="Fatest Delivery"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/priceFilter"
-        style="@style/text_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_ripple"
-        android:gravity="center"
-        android:text="Price Range"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/currentlyOpen"
-        style="@style/text_condensed_bold"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_ripple"
-        android:gravity="center"
-        android:text="Currently Open"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/popularityFilter"
+            style="@style/text_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_ripple"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="Popularity"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/priceFilter"
+            style="@style/text_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_ripple"
+            android:gravity="center"
+            android:text="Price Range"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/currentlyOpen"
+            style="@style/text_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_ripple"
+            android:gravity="center"
+            android:text="Currently Open"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/byTags"
+            style="@style/text_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_ripple"
+            android:gravity="center"
+            android:text="By Tags"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+
+
 
 </LinearLayout>

@@ -63,6 +63,20 @@ public class LocalDBRepository {
         );
     }
 
+    public Single<List<Resturant>> getAllResturantsFilteredByTags(Context context,List<String> tags) {
+        DDLog.d(TAG,"getAllResturantsByDeliveryTime");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getResturantsFilteredByTags(tags)
+        );
+    }
+
+    public Single<List<String>> getAllTagsFromResturant(Context context) {
+        DDLog.d(TAG,"getAllResturantsByDeliveryTime");
+        return getDBFlowable(context).firstOrError().flatMap(
+                resturantDatabase -> resturantDatabase.resturantDao().getAllTagsFromResturants()
+        );
+    }
+
     public Single<List<Resturant>> getAllResturantsByDelieveryFee(Context context) {
         DDLog.d(TAG,"getAllResturantsByDeliveryTime");
         return getDBFlowable(context).firstOrError().flatMap(

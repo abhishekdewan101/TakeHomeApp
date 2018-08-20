@@ -2,6 +2,7 @@ package abhishekdewan101.com.doordashlite.features.home;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
@@ -32,5 +33,7 @@ public interface HomeScreenContract {
         void getAllOpenResturants(Context context);
 
         void getResturantsFilterByDeliveryFee(Context context);
+
+        void filterResturantsByTags(Context context,ArrayList<String> stringArrayList);
     }
 }

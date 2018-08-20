@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.RawQuery;
 
 import java.util.List;
 
@@ -42,6 +43,11 @@ public interface ResturantDao {
     @Query("SELECT * FROM resturants WHERE mStatusType = 'open' ORDER BY mDelieveryTime ASC")
     Single<List<Resturant>> getAllResturantsByDeliveryTime();
 
+    @Query("SELECT * FROM resturants WHERE mTags IN (:tags)")
+    Single<List<Resturant>> getResturantsFilteredByTags(List<String> tags);
+
+    @Query("SELECT mTags FROM resturants")
+    Single<List<String>> getAllTagsFromResturants();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertResturant(Resturant resturant);

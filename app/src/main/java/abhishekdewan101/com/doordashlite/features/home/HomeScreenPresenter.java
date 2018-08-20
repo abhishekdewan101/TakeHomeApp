@@ -2,6 +2,7 @@ package abhishekdewan101.com.doordashlite.features.home;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -168,6 +169,36 @@ class HomeScreenPresenter extends BasePresenter<HomeScreenContract.HomeScreenVie
                                 }
                         )
         );
+    }
+
+    @Override
+    public void filterResturantsByTags(Context context,ArrayList<String> stringArrayList) {
+        DDLog.d(TAG,"filterResturantsByTags");
+        mCompositeDisposable.add(
+          mLocalDBRepository.getAllResturantsFilteredByTags(context,stringArrayList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        resturants -> {
+                            mBaseView.replaceResturants(resturants);
+                        },errors -> {
+                            mBaseView.handleError(errors);
+                        }
+                )
+        );
+    }
+
+    private String getQueryFromList(ArrayList<String> stringArrayList) {
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0 ; i < stringArrayList.size() ; i++) {
+            if (i == stringArrayList.size() - 1) {
+                builder.append(stringArrayList.get(i));
+            } else {
+                builder.append(stringArrayList.get(i)).append(",");
+            }
+        }
+        DDLog.e(TAG,builder.toString());
+        return builder.toString();
     }
 
 

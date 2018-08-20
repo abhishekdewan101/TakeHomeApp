@@ -71,11 +71,18 @@ public class FilterBottomSheetDialog extends BottomSheetDialogFragment {
         this.dismissAllowingStateLoss();
     }
 
+    @OnClick(R.id.byTags)
+    void filterByTagsClicked() {
+        mListener.filterByTags();
+        this.dismissAllowingStateLoss();
+    }
+
     public interface FilterBottomSheetInterface {
         void filterByPrice();
         void filterByFastestDelivery();
         void filterByPopularity();
         void filterByLowestDelivery();
         void filterByOpenResturants();
+        void filterByTags();
     }
 }
