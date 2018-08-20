@@ -8,6 +8,10 @@ import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;
 
+/**
+ * ResturantRepository exposes the functionality of the DDResturantManager to the presenters
+ * to get a list of resturants from the API's provided.
+ */
 public class ResturantRepository {
 
     private final String TAG = DDConstants.PREFIX + ResturantRepository.class.getSimpleName();

@@ -7,6 +7,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static abhishekdewan101.com.doordashlite.utils.DDConstants.BASE_URL;
+
+/*
+ * The DDResturantApiClient creates the retrofit client for talking to the provided
+ * api and then exposes the DDResturantApi to be used.
+ */
+
 public class DDResturantApiClient {
 
     private Retrofit mDDRetrofitClient;
@@ -20,7 +27,7 @@ public class DDResturantApiClient {
     }
 
     private void createDDRetrofitClient() {
-        mDDRetrofitClient = new Retrofit.Builder().baseUrl("https://api.doordash.com")
+        mDDRetrofitClient = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(buildClientWithLoggingEnabled())

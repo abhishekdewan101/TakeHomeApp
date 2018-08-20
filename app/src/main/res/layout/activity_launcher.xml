@@ -94,4 +94,44 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/noDataModeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            style="@style/text_condensed_bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Couldn't download data. Please re-connect the internet and hit retry."/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/retryButton"
+                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_ripple"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Retry"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

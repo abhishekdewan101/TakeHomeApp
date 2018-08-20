@@ -15,19 +15,26 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
+/**
+ * Repository that exposes the local sqllite database functionality to be used
+ * by the presenters.
+ */
+
 public class LocalDBRepository {
 
     protected final String TAG = DDConstants.PREFIX + getClass().getSimpleName();
 
     private static ResturantDatabase mResturantDatabase;
 
-    public Flowable<Integer> getNumberOfResturantsInDB(Context context) {
+    //Get total number of resturants in the DB
+    public Single<Integer> getNumberOfResturantsInDB(Context context) {
         DDLog.d(TAG,"getAllResturantFromDB");
-        return getDBFlowable(context).flatMap(
+        return getDBFlowable(context).firstOrError().flatMap(
           resturantDatabase -> resturantDatabase.resturantDao().provideNumberOfResturantsInDB()
         );
     }
 
+    //Get All the Resturants in the DB
     public Single<List<Resturant>> getAllResturantsInDB(Context context) {
         DDLog.d(TAG,"getAllResturantsInDB");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -35,6 +42,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get resturants who's name start with provided String
     public Single<List<Resturant>> getAllResturantsStartingWith(Context context,String name) {
         DDLog.d(TAG,"getAllResturantsStartingWith");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -42,6 +50,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get resturants filtered by popularity (DESC)
     public Single<List<Resturant>> getAllResturantsByPopularity(Context context) {
         DDLog.d(TAG,"getAllResturantsByPopularity");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -49,6 +58,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get Resturants filtered by Price Range (DESC)
     public Single<List<Resturant>> getAllResturantsByPrice(Context context) {
         DDLog.d(TAG,"getAllResturantsByPopularity");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -56,6 +66,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get Resturants filtered by Delivery Time(ASC)
     public Single<List<Resturant>> getAllResturantsByDeliveryTime(Context context) {
         DDLog.d(TAG,"getAllResturantsByDeliveryTime");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -63,6 +74,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get resturants that are tagged with provided tags.
     public Single<List<Resturant>> getAllResturantsFilteredByTags(Context context,List<String> tags) {
         DDLog.d(TAG,"getAllResturantsByDeliveryTime");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -70,6 +82,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get all the tags
     public Single<List<String>> getAllTagsFromResturant(Context context) {
         DDLog.d(TAG,"getAllResturantsByDeliveryTime");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -77,6 +90,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get resturants filtered by delievery fee (ASC)
     public Single<List<Resturant>> getAllResturantsByDelieveryFee(Context context) {
         DDLog.d(TAG,"getAllResturantsByDeliveryTime");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -84,6 +98,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get all resturants that are opened.
     public Single<List<Resturant>> getAllOpenResturants(Context context) {
         DDLog.d(TAG,"getAllOpenResturants");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -91,6 +106,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get resturants details for a particular resturant.
     public Single<Resturant> getResturantDetailsForId(Context context,long id) {
         DDLog.d(TAG,"getResturantDetailsForId");
         return getDBFlowable(context).firstOrError().flatMap(
@@ -98,6 +114,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Reset database to be populated with new information.
     public Flowable<Integer> resetDBForNewLocation(Context context) {
         DDLog.d(TAG,"resetDBForNewLocation");
         return getDBFlowable(context).flatMap(
@@ -109,6 +126,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Get all popular items if present for a resturant.
     public Flowable<List<Items>> getItemsForResturant(Context context,long id) {
         DDLog.d(TAG,"getItemsForResturant");
         return getDBFlowable(context).flatMap(
@@ -116,6 +134,7 @@ public class LocalDBRepository {
         );
     }
 
+    // Insert a resturant into the database.
     public Flowable<Integer> insertResturantIntoDB(Context context,Resturant resturant) {
         DDLog.d(TAG,"insertResturantIntoDB with Resturant - " + resturant.mName);
         return getDBFlowable(context).flatMap(
@@ -136,6 +155,8 @@ public class LocalDBRepository {
         );
     }
 
+
+    // Get a database object as a Flowable to be used as part of a RxChain
     private Flowable<ResturantDatabase> getDBFlowable(Context context) {
         DDLog.d(TAG,"getDBFlowable");
 

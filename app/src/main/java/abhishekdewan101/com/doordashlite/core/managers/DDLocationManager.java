@@ -21,10 +21,14 @@ import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.functions.Function;
 
+/**
+ * DDLocationManager is a class that provides repositories with a way to interface with the lower
+ * level location api's to get the current location of the user.
+ */
 public class DDLocationManager {
 
     public static final String TAG = DDConstants.PREFIX + DDLocationManager.class.getSimpleName();
-    public static final Long LOCATION_REQUEST_TIMEOUT = 15 * 1000L; // 15 seconds;
+    public static final Long LOCATION_REQUEST_TIMEOUT = 10 * 1000L; // 10 seconds timeout for getting user current location;
 
     public Flowable<Location> getUserCurrentLocation(Context context) {
         DDLog.d(TAG,"getUserCurrentLocation");
@@ -55,6 +59,10 @@ public class DDLocationManager {
     }
 
 
+    /**
+     * We do not have to worry about permissions here as we ensure that the permission are given by the app
+     * in the activity.
+     */
     @SuppressWarnings({"MissingPermission"})
     private void getLocationInternal(Context context, FlowableEmitter<Location> emitter) {
         DDLog.d(TAG,"getLocationInternal");

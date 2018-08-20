@@ -6,6 +6,11 @@ import android.os.Bundle;
 
 import io.reactivex.FlowableEmitter;
 
+/**
+ * A LocationListener that emitts the information through a FlowableEmitter
+ *
+ * Written to work seamlessly within RxChains through out the app.
+ */
 public class FlowableLocationListener implements LocationListener {
 
     private final FlowableEmitter<Location> mLocationEmitter;

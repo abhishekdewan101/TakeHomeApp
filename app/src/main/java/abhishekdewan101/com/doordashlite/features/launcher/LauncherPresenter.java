@@ -76,7 +76,11 @@ class LauncherPresenter extends BasePresenter<LauncherContract.LauncherView> imp
                 .subscribe(
                         size -> {
                             DDLog.d(TAG, "Number of Resturants is " + size);
-                            mBaseView.showOfflineAccessMode();
+                            if (size == 0) {
+                                mBaseView.showNoDataMode();
+                            } else {
+                                mBaseView.showOfflineAccessMode();
+                            }
                         }, error -> {
                             DDLog.e(TAG, error.getMessage());
                         }

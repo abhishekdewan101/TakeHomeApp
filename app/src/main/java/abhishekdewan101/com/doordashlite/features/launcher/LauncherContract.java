@@ -9,6 +9,7 @@ public interface LauncherContract {
         void onResturantsDownloaded();
         void showOfflineAccessMode();
         void updateLoadingStatus();
+        void showNoDataMode();
     }
 
     interface LauncherActions {

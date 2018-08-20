@@ -9,6 +9,11 @@ import abhishekdewan101.com.doordashlite.utils.DDConstants;
 import abhishekdewan101.com.doordashlite.utils.DDLog;
 import io.reactivex.Flowable;
 
+/*
+ * LocationRepository exposes the functionalities of the DDLocationManager to the presenters to
+ * get the users current location if needed.
+ */
+
 public class LocationRepository {
 
     private final String TAG = DDConstants.PREFIX + LocationRepository.class.getSimpleName();

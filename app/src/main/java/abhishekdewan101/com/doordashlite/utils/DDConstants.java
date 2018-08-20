@@ -8,6 +8,8 @@ public class DDConstants {
 
     public static final String PREFIX = "DDLite -> ";
 
+    public static final String BASE_URL = "https://api.doordash.com";
+
     public static final String[] REQUIRED_PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION

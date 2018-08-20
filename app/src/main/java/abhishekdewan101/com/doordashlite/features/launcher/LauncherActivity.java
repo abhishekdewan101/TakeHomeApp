@@ -49,6 +49,10 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     @BindView(R.id.loadingStatusText)
     TextView mLoadingStatusText;
 
+    @BindView(R.id.noDataModeLayout)
+    LinearLayout mNoDataLayout;
+
+
     @Override
     protected LauncherPresenter createPresenter() {
         return new LauncherPresenter(this);
@@ -82,6 +86,12 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
         onResturantsDownloaded();
     }
 
+    @OnClick(R.id.retryButton)
+    public void retryButtonClicked() {
+        mNoDataLayout.setVisibility(View.GONE);
+        verifyRequiredPermissions();
+    }
+
     @Override
     public void handleError(Throwable throwable) {
         dismissLoading();
@@ -107,6 +117,11 @@ public class LauncherActivity extends BaseActivity<LauncherPresenter> implements
     @Override
     public void updateLoadingStatus() {
         mLoadingStatusText.setText("We are now looking for resturants that are nearby you.\nThank you for your patience...");
+    }
+
+    @Override
+    public void showNoDataMode() {
+        mNoDataLayout.setVisibility(View.VISIBLE);
     }
 
     private void verifyRequiredPermissions() {

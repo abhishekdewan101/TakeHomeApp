@@ -18,6 +18,7 @@ import abhishekdewan101.com.doordashlite.data.model.Menu;
 import abhishekdewan101.com.doordashlite.data.model.Resturant;
 import abhishekdewan101.com.doordashlite.features.base.BaseActivity;
 import abhishekdewan101.com.doordashlite.features.resturantdetails.popularItemlist.PopularItemListAdapater;
+import abhishekdewan101.com.doordashlite.utils.DDLog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -81,7 +82,7 @@ public class ResturantDetailActivity extends BaseActivity<ResturantDetailPresent
 
     @Override
     public void handleError(Throwable throwable) {
-
+        DDLog.e(TAG,throwable.getMessage());
     }
 
     @OnClick(R.id.backButtonLayout)

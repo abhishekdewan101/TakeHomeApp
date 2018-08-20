@@ -56,7 +56,7 @@ public interface ResturantDao {
     void insertItem(Items item);
 
     @Query("SELECT COUNT(*) FROM resturants")
-    Flowable<Integer> provideNumberOfResturantsInDB();
+    Single<Integer> provideNumberOfResturantsInDB();
 
     @Query("DELETE FROM resturants")
     void resetResturantsForNewLocation();
