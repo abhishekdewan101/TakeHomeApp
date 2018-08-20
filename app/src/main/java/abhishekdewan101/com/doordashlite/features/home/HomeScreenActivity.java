@@ -190,6 +190,8 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
         if (requestCode == FILTER_TAG_ACTIVITY_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Bundle b = data.getBundleExtra(FILTER_TAG_ACTIVITY_RESULT);
+                mIsManaulChange = true;
+                mSearchBar.setText("");
                 mPresenter.filterResturantsByTags(this,b.getStringArrayList(TAG_LIST));
             }
         }
