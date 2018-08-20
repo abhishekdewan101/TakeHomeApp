@@ -35,6 +35,7 @@ The following features have been implemented
 The provided api were found to have the following limitations:
 * The /resturants/id/ api does not provide a list of popular items in its menu object however, when we used /resturants?lat&&long we do get a list of popular menu items in the response. Since we had to implement a resturant detail page I chose to use the first api and ignore the second api.
 * The use of the offset param in the /resturant api call leads to weird behavior where the api returns the same resturants multiple times( checked by writing a test program). This was unacceptable as it makes the app look broken, moreover, it messes with the filter functionality I had created. Hence I made a decision to not use the offset params or limit param in the api call and download the entire database as once. This obviously affects boot times however, I was comfortable making that sacrifice.
+* The Delivery fee for each resturant is always $0, this messes with the filter by delievery fee filter.
 
 ## Improvement Plan
 * Improve the boot times by incorporating the offset and limit params back into the api call.
